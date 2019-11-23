@@ -26,13 +26,8 @@ code {
   align-items: center;
 }
 
-#topName {
-  height: 10vh;
-}
-
 .navBar {
   height: 15vh;
-  font-size: 2vh;
 }
 
 .mapContainer {
