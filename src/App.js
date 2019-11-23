@@ -3,8 +3,33 @@ import {connect} from 'react-redux';
 
 class App extends Component {
 
+  state = {
+    click: false
+  }
+
   componentDidMount = () => {
     console.log("App Component Run")
+  }
+
+  handleClickDown = (e) => {
+    e.preventDefault()
+    this.setState(() => ({
+      click: true
+    }))
+    console.log(e.clientX,e.clientY)
+  }
+
+  handleClickUp = (e) => {
+    console.log(e.clientX,e.clientY)
+    this.setState(() => ({
+      click: false
+    }))
+  }
+
+  handleMouseMove = (e) => {
+    if (this.state.click === true) {
+      console.log(e.clientX,e.clientY)
+    }
   }
 
   render() {
@@ -19,7 +44,7 @@ class App extends Component {
           </p>
           </div>
           <div className="mapContainer">
-            <img src={`/maps/${this.props.mapName}.jpg`} alt={this.props.mapName} usemap="#image-map">
+            <img src={`/maps/${this.props.mapName}.jpg`} alt={this.props.mapName} useMap="#image-map" onMouseDown={this.handleClickDown} onMouseUp={this.handleClickUp} onMouseMove={this.handleMouseMove}>
             </img>
             <map name="image-map">
               <area style={{cursor: "pointer"}} alt="a" title="a" coords="947,450,922,425" shape="rect" />
