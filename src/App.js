@@ -9,17 +9,27 @@ class App extends Component {
 
   render() {
       return (
-        <div className="centerRow">
-          <p>
+        <div className="centerColumn">
+          <div className="centerColumn navBar">
+          <p style={{fontSize: "2.5vh"}}>
             {this.props.mapData}
           </p>
+          <p style={{fontSize: "2vh"}}>
+            Lakeland - Tyger | Next | This | That
+          </p>
+          </div>
+          <div className="mapContainer">
+            <img src={`/maps/${this.props.mapName}.jpg`} alt={this.props.mapName}>
+            </img>
+          </div>
         </div>
       );
     }
   }
 
   const mapStateToProps = state => ({
-    mapData: state.mapData
+    mapData: state.mapData,
+    mapName: state.mapName
   })
 
 export default connect(mapStateToProps,null)(App);
