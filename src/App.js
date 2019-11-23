@@ -4,7 +4,9 @@ import {connect} from 'react-redux';
 class App extends Component {
 
   state = {
-    click: false
+    click: false,
+    imgWidth: 0,
+    imgHeight: 0
   }
 
   componentDidMount = () => {
@@ -13,23 +15,32 @@ class App extends Component {
 
   handleClickDown = (e) => {
     e.preventDefault()
-    this.setState(() => ({
-      click: true
+    this.setState((state) => ({
+      click: state.click = true
     }))
-    console.log(e.clientX,e.clientY)
+    console.log(this.state)
   }
 
   handleClickUp = (e) => {
-    console.log(e.clientX,e.clientY)
-    this.setState(() => ({
-      click: false
+    this.setState((state) => ({
+      click: state.click = false
     }))
+    console.log(this.state)
   }
 
   handleMouseMove = (e) => {
     if (this.state.click === true) {
       console.log(e.clientX,e.clientY)
     }
+  }
+
+  handleLoad = (e) => {
+    let width = e.target.width
+    let height = e.target.height
+    this.setState((state, props) => ({
+      imgWidth: state.imgWidth = width,
+      imgHeight: state.imgHeight = height
+    }))
   }
 
   render() {
@@ -44,7 +55,7 @@ class App extends Component {
           </p>
           </div>
           <div className="mapContainer">
-            <img src={`/maps/${this.props.mapName}.jpg`} alt={this.props.mapName} useMap="#image-map" onMouseDown={this.handleClickDown} onMouseUp={this.handleClickUp} onMouseMove={this.handleMouseMove}>
+            <img src={`/maps/${this.props.mapName}.jpg`} onLoad={this.handleLoad} alt={this.props.mapName} useMap="#image-map" onMouseDown={this.handleClickDown} onMouseUp={this.handleClickUp} onMouseMove={this.handleMouseMove}>
             </img>
             <map name="image-map">
               <area style={{cursor: "pointer"}} alt="a" title="a" coords="947,450,922,425" shape="rect" />
