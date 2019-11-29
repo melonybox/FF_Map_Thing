@@ -12,7 +12,7 @@ class App extends Component {
 
   componentDidMount = () => {
     console.log("App Component Run")
-    // window.addEventListener('resize', this.updateWindowDimensions);
+    window.addEventListener('resize', this.updateWindowDimensions);
   }
 
   handleClickDown = (e) => {
@@ -39,19 +39,36 @@ class App extends Component {
   handleLoad = (e) => {
     let width = e.target.width
     let height = e.target.height
-    let defaultScale = e.target.parentElement.clientHeight / e.target.height
+    let widthScale = e.target.parentElement.clientWidth / e.target.width
+    let heightScale = e.target.parentElement.clientHeight / e.target.height
+    let finalScale = 0
+
+    if (height * widthScale > e.target.parentElement.clientHeight) {
+      finalScale = heightScale
+    } else {
+      finalScale = widthScale
+    }
 
     this.setState((state, props) => ({
       imgWidth: state.imgWidth = width,
       imgHeight: state.imgHeight = height,
-      defaultScale: state.defaultScale = defaultScale
+      defaultScale: state.defaultScale = finalScale
     }))
   }
 
   updateWindowDimensions = () => {
-    let newScale = document.getElementsByClassName("mapContainer")[0].clientHeight / this.state.imgHeight
+    let newScaleHeight = document.getElementsByClassName("mapContainer")[0].clientHeight / this.state.imgHeight
+    let newScaleWidth = document.getElementsByClassName("mapContainer")[0].clientWidth / this.state.imgWidth
+    let newScaleFinal = 0
+
+    if (this.state.imgHeight * newScaleWidth > document.getElementsByClassName("mapContainer")[0].clientHeight) {
+      newScaleFinal = newScaleHeight
+    } else {
+      newScaleFinal = newScaleWidth
+    }
+
     this.setState((state, props) => ({
-      defaultScale: state.defaultScale = newScale
+      defaultScale: state.defaultScale = newScaleFinal
     }))
   }
 
