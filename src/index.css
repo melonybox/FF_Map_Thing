@@ -28,16 +28,18 @@ code {
 
 .navBar {
   height: 15vh;
-  line-height: calc(1.5em + 0.5vw);
+  line-height: calc(1.5rem + 0.5vw);
 }
 
 .titleText {
-  font-size: calc(1em + 2vw);
+  font-size: calc(2rem + 0.2vw);
+  letter-spacing: calc((2rem + 0.2vw) * 0.02);
   margin: 0;
 }
 
 .navText {
-  font-size: calc(1em + 0.1vw);
+  font-size: calc(1rem + 0.1vw);
+  letter-spacing: calc((1rem + 0.1vw) * 0.01);
   margin: 0;
 }
 
