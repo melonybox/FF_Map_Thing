@@ -15,6 +15,10 @@ class App extends Component {
     window.addEventListener('resize', this.updateWindowDimensions);
   }
 
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
   handleClickDown = (e) => {
     e.preventDefault()
     this.setState((state) => ({
