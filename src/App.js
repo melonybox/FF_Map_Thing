@@ -12,6 +12,7 @@ class App extends Component {
 
   componentDidMount = () => {
     console.log("App Component Run")
+    // window.addEventListener('resize', this.updateWindowDimensions);
   }
 
   handleClickDown = (e) => {
@@ -44,6 +45,13 @@ class App extends Component {
       imgWidth: state.imgWidth = width,
       imgHeight: state.imgHeight = height,
       defaultScale: state.defaultScale = defaultScale
+    }))
+  }
+
+  updateWindowDimensions = () => {
+    let newScale = document.getElementsByClassName("mapContainer")[0].clientHeight / this.state.imgHeight
+    this.setState((state, props) => ({
+      defaultScale: state.defaultScale = newScale
     }))
   }
 
