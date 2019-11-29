@@ -50,5 +50,5 @@ code {
 }
 
 img {
-    transform: scale(0.5) translateX(-1024px) translateY(-1024px);
+    transform-origin: top left;
 }
