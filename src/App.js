@@ -7,7 +7,8 @@ class App extends Component {
     click: false,
     imgWidth: 0,
     imgHeight: 0,
-    defaultScale: 0
+    defaultScale: 0,
+    defaultScaleArr: []
   }
 
   componentDidMount = () => {
@@ -53,10 +54,24 @@ class App extends Component {
       finalScale = widthScale
     }
 
+    let finalScaleArr = []
+    let i = 0
+
+    for (i = 4; i > 0; i--) {
+      if (i === 4) {
+        finalScaleArr.push(finalScale)
+      } else {
+        finalScaleArr.push(finalScale * (i * 0.25))
+      }
+    }
+
+    console.log(finalScaleArr)
+
     this.setState((state, props) => ({
       imgWidth: state.imgWidth = width,
       imgHeight: state.imgHeight = height,
-      defaultScale: state.defaultScale = finalScale
+      defaultScale: state.defaultScale = finalScale,
+      defaultScaleArr: state.defaultScaleArr = finalScaleArr
     }))
   }
 
@@ -71,8 +86,22 @@ class App extends Component {
       newScaleFinal = newScaleWidth
     }
 
+    let finalScaleArr = []
+    let i = 0
+
+    for (i = 4; i > 0; i--) {
+      if (i === 4) {
+        finalScaleArr.push(newScaleFinal)
+      } else {
+        finalScaleArr.push(newScaleFinal * (i * 0.25))
+      }
+    }
+
+    console.log(finalScaleArr)
+
     this.setState((state, props) => ({
-      defaultScale: state.defaultScale = newScaleFinal
+      defaultScale: state.defaultScale = newScaleFinal,
+      defaultScaleArr: state.defaultScaleArr = finalScaleArr
     }))
   }
 
