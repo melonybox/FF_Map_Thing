@@ -11,7 +11,8 @@ class App extends Component {
     currZoom: 1,
     defaultXOffSet: 0,
     defaultYOffset: 0,
-    startXOffSet: 0
+    startXOffSet: 0,
+    multiplyerX: 0
   }
 
   componentDidMount = () => {
@@ -25,7 +26,7 @@ class App extends Component {
 
   handleClickDown = (e) => {
     e.preventDefault()
-    let startXOffSet = e.clientX
+    let startXOffSet = this.state.defaultXOffSet
     this.setState((state) => ({
       click: state.click = true,
       startXOffSet: state.startXOffSet = startXOffSet
@@ -42,12 +43,13 @@ class App extends Component {
 
   handleMouseMove = (e) => {
     if (this.state.click === true) {
-      let newXTrim = e.clientX - this.state.startXOffSet
-      let newXOffset = this.state.startXOffSet + newXTrim
+      let newXTrim = this.state.defaultXOffSet + ( (e.movementX*2.25)*this.state.multiplyerX)
+      let testo = ( e.movementX*(2.25*this.state.multiplyerX))
+      // let newXOffset = this.state.startXOffSet + newXTrim
       this.setState((state, props) =>({
-        defaultXOffSet: state.defaultXOffSet = newXOffset
+        defaultXOffSet: state.defaultXOffSet = newXTrim
       }))
-      console.log(e.clientX,e.clientY,newXOffset)
+      console.log(e.clientX,e.clientY,testo)
     }
   }
 
@@ -65,6 +67,9 @@ class App extends Component {
       let scaleMult = e.target.parentElement.clientWidth / (width * finalScale)
       let imgMult = width * scaleMult
       xOffset = (imgMult - width) / 2
+      this.setState((state, props) => ({
+        multiplyerX: state.multiplyerX = scaleMult
+      }))
     } else {
       finalScale = widthScale
       let scaleMult = e.target.parentElement.clientHeight / (height * finalScale)
