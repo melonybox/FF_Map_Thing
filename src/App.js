@@ -54,10 +54,14 @@ class App extends Component {
 
     if (height * widthScale > e.target.parentElement.clientHeight) {
       finalScale = heightScale
-      xOffset = ((e.target.parentElement.clientWidth - (finalScale * width)) / 2) + (e.target.parentElement.clientWidth - (finalScale * width))
+      let scaleMult = e.target.parentElement.clientWidth / (width * finalScale)
+      let imgMult = width * scaleMult
+      xOffset = (imgMult - width) / 2
     } else {
       finalScale = widthScale
-      yOffset = e.target.parentElement.clientHeight
+      let scaleMult = e.target.parentElement.clientHeight / (height * finalScale)
+      let imgMult = height * scaleMult
+      yOffset = (imgMult - height) / 2
     }
 
     let finalScaleArr = []
