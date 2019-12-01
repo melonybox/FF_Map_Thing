@@ -8,9 +8,10 @@ class App extends Component {
     imgWidth: 0,
     imgHeight: 0,
     defaultScaleArr: [],
-    currZoom: 0,
+    currZoom: 1,
     defaultXOffSet: 0,
-    defaultYOffset: 0
+    defaultYOffset: 0,
+    startXOffSet: 0
   }
 
   componentDidMount = () => {
@@ -24,8 +25,10 @@ class App extends Component {
 
   handleClickDown = (e) => {
     e.preventDefault()
+    let startXOffSet = e.clientX
     this.setState((state) => ({
-      click: state.click = true
+      click: state.click = true,
+      startXOffSet: state.startXOffSet = startXOffSet
     }))
     console.log(this.state)
   }
@@ -39,7 +42,12 @@ class App extends Component {
 
   handleMouseMove = (e) => {
     if (this.state.click === true) {
-      console.log(e.clientX,e.clientY)
+      let newXTrim = e.clientX - this.state.startXOffSet
+      let newXOffset = this.state.startXOffSet + newXTrim
+      this.setState((state, props) =>({
+        defaultXOffSet: state.defaultXOffSet = newXOffset
+      }))
+      console.log(e.clientX,e.clientY,newXOffset)
     }
   }
 
@@ -67,15 +75,15 @@ class App extends Component {
     let finalScaleArr = []
     let i = 0
 
-    for (i = 4; i > 0; i--) {
-      if (i === 4) {
+    for (i = 0; i < 4; i++) {
+      if (i === 0) {
         finalScaleArr.push(finalScale)
       } else {
-        finalScaleArr.push(finalScale * (i * 0.25))
+        finalScaleArr.push(finalScale * (i * 1.25))
       }
     }
 
-    console.log(finalScaleArr)
+    console.log(finalScaleArr,xOffset,yOffset)
 
     this.setState((state, props) => ({
       imgWidth: state.imgWidth = width,
