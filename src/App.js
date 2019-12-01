@@ -7,8 +7,10 @@ class App extends Component {
     click: false,
     imgWidth: 0,
     imgHeight: 0,
-    defaultScale: 0,
-    defaultScaleArr: []
+    defaultScaleArr: [],
+    currZoom: 0,
+    defaultXOffSet: 0,
+    defaultYOffset: 0
   }
 
   componentDidMount = () => {
@@ -44,14 +46,18 @@ class App extends Component {
   handleLoad = (e) => {
     let width = e.target.width
     let height = e.target.height
-    let widthScale = e.target.parentElement.clientWidth / e.target.width
-    let heightScale = e.target.parentElement.clientHeight / e.target.height
+    let widthScale = e.target.parentElement.clientWidth / width
+    let heightScale = e.target.parentElement.clientHeight / height
     let finalScale = 0
+    let xOffset = 0
+    let yOffset = 0
 
     if (height * widthScale > e.target.parentElement.clientHeight) {
       finalScale = heightScale
+      xOffset = ((e.target.parentElement.clientWidth - (finalScale * width)) / 2) + (e.target.parentElement.clientWidth - (finalScale * width))
     } else {
       finalScale = widthScale
+      yOffset = e.target.parentElement.clientHeight
     }
 
     let finalScaleArr = []
@@ -70,8 +76,9 @@ class App extends Component {
     this.setState((state, props) => ({
       imgWidth: state.imgWidth = width,
       imgHeight: state.imgHeight = height,
-      defaultScale: state.defaultScale = finalScale,
-      defaultScaleArr: state.defaultScaleArr = finalScaleArr
+      defaultScaleArr: state.defaultScaleArr = finalScaleArr,
+      defaultYOffset: state.defaultYOffset = yOffset,
+      defaultXOffSet: state.defaultXOffSet = xOffset
     }))
   }
 
@@ -100,7 +107,6 @@ class App extends Component {
     console.log(finalScaleArr)
 
     this.setState((state, props) => ({
-      defaultScale: state.defaultScale = newScaleFinal,
       defaultScaleArr: state.defaultScaleArr = finalScaleArr
     }))
   }
@@ -117,7 +123,7 @@ class App extends Component {
           </p>
           </div>
           <div className="mapContainer">
-            <img src={`/maps/${this.props.mapName}.jpg`} onLoad={this.handleLoad} style={{transform: `scale(${this.state.defaultScale}) translateX(0px) translateY(0px)`}}alt={this.props.mapName} useMap="#image-map" onMouseDown={this.handleClickDown} onMouseUp={this.handleClickUp} onMouseMove={this.handleMouseMove}>
+            <img src={`/maps/${this.props.mapName}.jpg`} onLoad={this.handleLoad} style={{transform: `scale(${this.state.defaultScaleArr[this.state.currZoom]}) translateX(${this.state.defaultXOffSet}px) translateY(${this.state.defaultYOffset}px)`}}alt={this.props.mapName} useMap="#image-map" onMouseDown={this.handleClickDown} onMouseUp={this.handleClickUp} onMouseMove={this.handleMouseMove}>
             </img>
             <map name="image-map">
               <area style={{cursor: "pointer"}} alt="a" title="a" coords="947,450,922,425" shape="rect" />
