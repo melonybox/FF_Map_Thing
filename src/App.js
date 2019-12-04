@@ -8,7 +8,7 @@ class App extends Component {
     imgWidth: 0,
     imgHeight: 0,
     defaultScaleArr: [],
-    currZoom: 1,
+    currZoom: 0,
     defaultXOffSet: 0,
     defaultYOffset: 0,
     startXOffSet: 0,
@@ -43,13 +43,12 @@ class App extends Component {
 
   handleMouseMove = (e) => {
     if (this.state.click === true) {
-      let newXTrim = this.state.defaultXOffSet + ( (e.movementX*2.25)*this.state.multiplyerX)
-      let testo = ( e.movementX*(2.25*this.state.multiplyerX))
+      let newXTrim = this.state.defaultXOffSet + (e.movementX/this.state.defaultScaleArr[this.state.currZoom])
       // let newXOffset = this.state.startXOffSet + newXTrim
       this.setState((state, props) =>({
         defaultXOffSet: state.defaultXOffSet = newXTrim
       }))
-      console.log(e.clientX,e.clientY,testo)
+      console.log(newXTrim,(e.movementX/this.state.defaultScaleArr[this.state.currZoom]))
     }
   }
 
