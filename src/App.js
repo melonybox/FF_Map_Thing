@@ -8,7 +8,7 @@ class App extends Component {
     imgWidth: 0,
     imgHeight: 0,
     defaultScaleArr: [],
-    currZoom: 0,
+    currZoom: 2,
     defaultXOffSet: 0,
     defaultYOffset: 0,
     startXOffSet: 0,
