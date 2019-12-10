@@ -90,8 +90,6 @@ class App extends Component {
       }
     }
 
-    console.log(finalScaleArr,xOffset,yOffset)
-
     this.setState((state, props) => ({
       imgWidth: state.imgWidth = width,
       imgHeight: state.imgHeight = height,
@@ -113,14 +111,16 @@ class App extends Component {
       let scaleMult = document.getElementsByClassName("mapContainer")[0].clientWidth / (this.state.imgWidth * newScaleFinal)
       let imgMult = this.state.imgWidth * scaleMult
       xOffset = (imgMult - this.state.imgWidth) / 2
+      yOffset = 0
       this.setState((state, props) => ({
         multiplyerX: state.multiplyerX = scaleMult
       }))
     } else {
       newScaleFinal = newScaleWidth
-      let scaleMult = document.getElementsByClassName("mapContainer")[0].clientHeight / (this.state.Height * newScaleFinal)
+      let scaleMult = document.getElementsByClassName("mapContainer")[0].clientHeight / (this.state.imgHeight * newScaleFinal)
       let imgMult = this.state.imgHeight * scaleMult
-      xOffset = (imgMult - this.state.imgHeight) / 2
+      yOffset = (imgMult - this.state.imgHeight) / 2
+      xOffset = 0
       this.setState((state, props) => ({
         multiplyerX: state.multiplyerX = scaleMult
       }))
@@ -136,8 +136,6 @@ class App extends Component {
         finalScaleArr.push(newScaleFinal * (i * 0.25))
       }
     }
-
-    console.log(finalScaleArr)
 
     this.setState((state, props) => ({
       defaultScaleArr: state.defaultScaleArr = finalScaleArr,
