@@ -8,7 +8,7 @@ class App extends Component {
     imgWidth: 0,
     imgHeight: 0,
     defaultScaleArr: [],
-    currZoom: 2,
+    currZoom: 0,
     defaultXOffSet: 0,
     defaultYOffset: 0,
     startXOffSet: 0,
@@ -74,6 +74,9 @@ class App extends Component {
       let scaleMult = e.target.parentElement.clientHeight / (height * finalScale)
       let imgMult = height * scaleMult
       yOffset = (imgMult - height) / 2
+      this.setState((state, props) => ({
+        multiplyerX: state.multiplyerX = scaleMult
+      }))
     }
 
     let finalScaleArr = []
@@ -102,11 +105,25 @@ class App extends Component {
     let newScaleHeight = document.getElementsByClassName("mapContainer")[0].clientHeight / this.state.imgHeight
     let newScaleWidth = document.getElementsByClassName("mapContainer")[0].clientWidth / this.state.imgWidth
     let newScaleFinal = 0
+    let xOffset = 0
+    let yOffset = 0
 
     if (this.state.imgHeight * newScaleWidth > document.getElementsByClassName("mapContainer")[0].clientHeight) {
       newScaleFinal = newScaleHeight
+      let scaleMult = document.getElementsByClassName("mapContainer")[0].clientWidth / (this.state.imgWidth * newScaleFinal)
+      let imgMult = this.state.imgWidth * scaleMult
+      xOffset = (imgMult - this.state.imgWidth) / 2
+      this.setState((state, props) => ({
+        multiplyerX: state.multiplyerX = scaleMult
+      }))
     } else {
       newScaleFinal = newScaleWidth
+      let scaleMult = document.getElementsByClassName("mapContainer")[0].clientHeight / (this.state.Height * newScaleFinal)
+      let imgMult = this.state.imgHeight * scaleMult
+      xOffset = (imgMult - this.state.imgHeight) / 2
+      this.setState((state, props) => ({
+        multiplyerX: state.multiplyerX = scaleMult
+      }))
     }
 
     let finalScaleArr = []
@@ -123,7 +140,9 @@ class App extends Component {
     console.log(finalScaleArr)
 
     this.setState((state, props) => ({
-      defaultScaleArr: state.defaultScaleArr = finalScaleArr
+      defaultScaleArr: state.defaultScaleArr = finalScaleArr,
+      defaultYOffset: state.defaultYOffset = yOffset,
+      defaultXOffSet: state.defaultXOffSet = xOffset
     }))
   }
 
