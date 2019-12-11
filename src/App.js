@@ -161,6 +161,10 @@ class App extends Component {
             <map name="image-map">
               <area style={{cursor: "pointer"}} alt="a" title="a" coords="947,450,922,425" shape="rect" />
             </map>
+            <div className="zoomButtons">
+              <p> Increase </p>
+              <p> Decrease </p>
+            </div>
           </div>
         </div>
       );
