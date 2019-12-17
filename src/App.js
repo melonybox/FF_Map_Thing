@@ -11,6 +11,8 @@ class App extends Component {
     currZoom: 0,
     defaultXOffSet: 0,
     defaultYOffset: 0,
+    zoomXOffSet: 0,
+    zoomYOffSet: 0,
     multiplyerX: 0
   }
 
@@ -25,10 +27,12 @@ class App extends Component {
 
   handleClickDown = (e) => {
     e.preventDefault()
-    this.setState((state) => ({
-      click: state.click = true
-    }))
-    console.log(this.state)
+    if (this.state.currZoom !== 0) {
+      this.setState((state) => ({
+        click: state.click = true
+      }))
+      console.log(this.state)
+    }
   }
 
   handleClickUp = (e) => {
@@ -169,7 +173,7 @@ class App extends Component {
           </p>
           </div>
           <div className="mapContainer">
-            <img src={`/maps/${this.props.mapName}.jpg`} onLoad={this.handleLoad} style={{transform: `scale(${this.state.defaultScaleArr[this.state.currZoom]}) translateX(${this.state.defaultXOffSet}px) translateY(${this.state.defaultYOffset}px)`}}alt={this.props.mapName} useMap="#image-map" onMouseDown={this.handleClickDown} onMouseUp={this.handleClickUp} onMouseMove={this.handleMouseMove}>
+            <img src={`/maps/${this.props.mapName}.jpg`} onLoad={this.handleLoad} style={{transform: `scale(${this.state.defaultScaleArr[this.state.currZoom]}) translateX(${this.state.currZoom === 0 ? this.state.defaultXOffSet : this.state.zoomXOffSet}px) translateY(${this.state.currZoom === 0 ? this.state.defaultYOffset : this.state.zoomYOffSet}px)`}}alt={this.props.mapName} useMap="#image-map" onMouseDown={this.handleClickDown} onMouseUp={this.handleClickUp} onMouseMove={this.handleMouseMove}>
             </img>
             <map name="image-map">
               <area style={{cursor: "pointer"}} alt="a" title="a" coords="947,450,922,425" shape="rect" />
