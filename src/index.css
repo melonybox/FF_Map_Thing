@@ -59,4 +59,5 @@ code {
 
 img {
     transform-origin: top left;
+    /* transition-duration: 0.3s; */
 }

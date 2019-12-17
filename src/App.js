@@ -31,7 +31,6 @@ class App extends Component {
       this.setState((state) => ({
         click: state.click = true
       }))
-      console.log(this.state)
     }
   }
 
@@ -51,7 +50,6 @@ class App extends Component {
         // defaultXOffSet: state.defaultXOffSet = newXTrim,
         // defaultYOffset: state.defaultYOffset = newYTrim
       }))
-      console.log(newYTrim)
     }
   }
 
@@ -99,8 +97,8 @@ class App extends Component {
       defaultScaleArr: state.defaultScaleArr = finalScaleArr,
       defaultYOffset: state.defaultYOffset = yOffset,
       defaultXOffSet: state.defaultXOffSet = xOffset,
-      zoomXOffSet: state.defaultXOffSet = xOffset,
-      zoomYOffSet: state.defaultYOffset = yOffset
+      zoomXOffSet: state.zoomXOffSet = xOffset,
+      zoomYOffSet: state.zoomYOffset = yOffset
     }))
   }
 
@@ -134,11 +132,11 @@ class App extends Component {
     let finalScaleArr = []
     let i = 0
 
-    for (i = 4; i > 0; i--) {
-      if (i === 4) {
+    for (i = 0; i < 4; i++) {
+      if (i === 0) {
         finalScaleArr.push(newScaleFinal)
       } else {
-        finalScaleArr.push(newScaleFinal * (i * 0.25))
+        finalScaleArr.push(newScaleFinal * (i * 1.25))
       }
     }
 
@@ -150,20 +148,30 @@ class App extends Component {
   }
 
   handleZoomIn = () => {
+    let zoom = document.getElementsByClassName("mapContainer")[0].childNodes[0]
     if (this.state.currZoom !== 3) {
+      zoom.style.transition = "0.3s"
       this.setState((state) => ({
         currZoom: state.currZoom = this.state.currZoom + 1
       }))
     }
+    setTimeout(() => {
+      zoom.style.transition = null
+    }, 150)
   }
 
   handleZoomOut = () => {
-      if (this.state.currZoom !== 0) {
-        this.setState((state) => ({
-          currZoom: state.currZoom = this.state.currZoom - 1
-        }))
-      }
+    let zoom = document.getElementsByClassName("mapContainer")[0].childNodes[0]
+    if (this.state.currZoom !== 0) {
+      zoom.style.transition = "0.3s"
+      this.setState((state) => ({
+        currZoom: state.currZoom = this.state.currZoom - 1
+      }))
     }
+    setTimeout(() => {
+      zoom.style.transition = null
+    }, 150)
+  }
 
   render() {
       return (
@@ -192,8 +200,8 @@ class App extends Component {
               <area style={{cursor: "pointer"}} alt="a" title="a" coords="947,450,922,425" shape="rect" />
             </map>
             <div className="zoomButtons">
-              <p onClick={this.handleZoomIn} > Increase </p>
-              <p onClick={this.handleZoomOut} > Decrease </p>
+              <p style={{cursor: "pointer"}} onClick={this.handleZoomIn} > Increase </p>
+              <p style={{cursor: "pointer"}} onClick={this.handleZoomOut} > Decrease </p>
             </div>
           </div>
         </div>
