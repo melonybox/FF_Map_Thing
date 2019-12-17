@@ -11,7 +11,6 @@ class App extends Component {
     currZoom: 0,
     defaultXOffSet: 0,
     defaultYOffset: 0,
-    startXOffSet: 0,
     multiplyerX: 0
   }
 
@@ -26,10 +25,8 @@ class App extends Component {
 
   handleClickDown = (e) => {
     e.preventDefault()
-    let startXOffSet = this.state.defaultXOffSet
     this.setState((state) => ({
-      click: state.click = true,
-      startXOffSet: state.startXOffSet = startXOffSet
+      click: state.click = true
     }))
     console.log(this.state)
   }
@@ -38,17 +35,17 @@ class App extends Component {
     this.setState((state) => ({
       click: state.click = false
     }))
-    console.log(this.state)
   }
 
   handleMouseMove = (e) => {
     if (this.state.click === true) {
       let newXTrim = this.state.defaultXOffSet + (e.movementX/this.state.defaultScaleArr[this.state.currZoom])
-      // let newXOffset = this.state.startXOffSet + newXTrim
+      let newYTrim = this.state.defaultYOffset + (e.movementY/this.state.defaultScaleArr[this.state.currZoom])
       this.setState((state, props) =>({
-        defaultXOffSet: state.defaultXOffSet = newXTrim
+        defaultXOffSet: state.defaultXOffSet = newXTrim,
+        defaultYOffset: state.defaultYOffset = newYTrim
       }))
-      console.log(newXTrim,(e.movementX/this.state.defaultScaleArr[this.state.currZoom]))
+      console.log(newYTrim)
     }
   }
 
