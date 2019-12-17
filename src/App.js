@@ -144,6 +144,22 @@ class App extends Component {
     }))
   }
 
+  handleZoomIn = () => {
+    if (this.state.currZoom !== 3) {
+      this.setState((state) => ({
+        currZoom: state.currZoom = this.state.currZoom + 1
+      }))
+    }
+  }
+
+  handleZoomOut = () => {
+      if (this.state.currZoom !== 0) {
+        this.setState((state) => ({
+          currZoom: state.currZoom = this.state.currZoom - 1
+        }))
+      }
+    }
+
   render() {
       return (
         <div className="centerColumn">
@@ -162,8 +178,8 @@ class App extends Component {
               <area style={{cursor: "pointer"}} alt="a" title="a" coords="947,450,922,425" shape="rect" />
             </map>
             <div className="zoomButtons">
-              <p> Increase </p>
-              <p> Decrease </p>
+              <p onClick={this.handleZoomIn} > Increase </p>
+              <p onClick={this.handleZoomOut} > Decrease </p>
             </div>
           </div>
         </div>
