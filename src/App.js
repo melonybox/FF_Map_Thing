@@ -150,15 +150,14 @@ class App extends Component {
 
   handleZoomIn = () => {
     let zoom = document.getElementsByClassName("mapContainer")[0].childNodes[0]
-    let zoomAmount = this.state.defaultYOffset * -7
+    let zoomAmount = (this.state.imgWidth * this.state.defaultScaleArr[1]) - (this.state.imgWidth * this.state.defaultScaleArr[0])
     if (this.state.currZoom !== 3) {
       zoom.style.transition = "0.3s"
       this.setState((state) => ({
         currZoom: state.currZoom = this.state.currZoom + 1,
-        zoomXOffSet: state.zoomXOffSet = zoomAmount * 1.5,
-        zoomYOffset: state.zoomYOffSet = zoomAmount
+        zoomXOffSet: state.zoomXOffSet = -zoomAmount,
+        zoomYOffset: state.zoomYOffSet = -zoomAmount + this.state.defaultYOffset
       }))
-          console.log(this.state.zoomYOffSet)
     }
     setTimeout(() => {
       zoom.style.transition = null
