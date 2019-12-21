@@ -150,13 +150,15 @@ class App extends Component {
 
   handleZoomIn = () => {
     let zoom = document.getElementsByClassName("mapContainer")[0].childNodes[0]
-    let zoomAmount = (this.state.imgWidth * this.state.defaultScaleArr[1]) - (this.state.imgWidth * this.state.defaultScaleArr[0])
+    let zoomAmountY = ((this.state.imgHeight * this.state.defaultScaleArr[this.state.currZoom + 1]) - (this.state.imgWidth * this.state.defaultScaleArr[this.state.currZoom]))
+    let zoomAmountX = ((this.state.imgWidth * this.state.defaultScaleArr[this.state.currZoom + 1]) - (this.state.imgWidth * this.state.defaultScaleArr[this.state.currZoom]))
+    console.log(this.state.multiplyerX)
     if (this.state.currZoom !== 3) {
       zoom.style.transition = "0.3s"
       this.setState((state) => ({
         currZoom: state.currZoom = this.state.currZoom + 1,
-        zoomXOffSet: state.zoomXOffSet = -zoomAmount,
-        zoomYOffset: state.zoomYOffSet = -zoomAmount + this.state.defaultYOffset
+        zoomXOffSet: state.zoomXOffSet = -zoomAmountX,
+        zoomYOffset: state.zoomYOffSet = -zoomAmountY + this.state.defaultYOffset
       }))
     }
     setTimeout(() => {
@@ -208,6 +210,9 @@ class App extends Component {
             <div className="zoomButtons">
               <p style={{cursor: "pointer"}} onClick={this.handleZoomIn} > Increase </p>
               <p style={{cursor: "pointer"}} onClick={this.handleZoomOut} > Decrease </p>
+            </div>
+            <div className="zoomCenter">
+              <p>X</p>
             </div>
           </div>
         </div>
