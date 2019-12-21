@@ -10,7 +10,7 @@ class App extends Component {
     defaultScaleArr: [],
     currZoom: 0,
     defaultXOffSet: 0,
-    defaultYOffset: 0,
+    defaultYOffSet: 0,
     zoomXOffSet: 0,
     zoomYOffSet: 0,
     multiplyerX: 0,
@@ -49,7 +49,7 @@ class App extends Component {
         zoomXOffSet: state.zoomXOffSet = newXTrim,
         zoomYOffSet: state.zoomYOffSet = newYTrim
         // defaultXOffSet: state.defaultXOffSet = newXTrim,
-        // defaultYOffset: state.defaultYOffset = newYTrim
+        // defaultYOffSet: state.defaultYOffSet = newYTrim
       }))
     }
   }
@@ -68,6 +68,7 @@ class App extends Component {
       let scaleMult = e.target.parentElement.clientWidth / (width * finalScale)
       let imgMult = width * scaleMult
       xOffset = (imgMult - width) / 2
+      console.log(scaleMult,imgMult,width,finalScale)
       this.setState((state, props) => ({
         multiplyerX: state.multiplyerX = scaleMult
       }))
@@ -88,7 +89,7 @@ class App extends Component {
       if (i === 0) {
         finalScaleArr.push(finalScale)
       } else {
-        finalScaleArr.push(finalScale * (i * 1.25))
+        finalScaleArr.push(finalScale * (((i * 25) * 0.01)+1))
       }
     }
 
@@ -96,10 +97,10 @@ class App extends Component {
       imgWidth: state.imgWidth = width,
       imgHeight: state.imgHeight = height,
       defaultScaleArr: state.defaultScaleArr = finalScaleArr,
-      defaultYOffset: state.defaultYOffset = yOffset,
+      defaultYOffSet: state.defaultYOffSet = yOffset,
       defaultXOffSet: state.defaultXOffSet = xOffset,
       zoomXOffSet: state.zoomXOffSet = xOffset,
-      zoomYOffSet: state.zoomYOffset = yOffset
+      zoomYOffSet: state.zoomYOffSet = yOffset
     }))
   }
 
@@ -137,13 +138,13 @@ class App extends Component {
       if (i === 0) {
         finalScaleArr.push(newScaleFinal)
       } else {
-        finalScaleArr.push(newScaleFinal * (i * 1.25))
+        finalScaleArr.push(newScaleFinal * (((i * 25) * 0.01)+1))
       }
     }
 
     this.setState((state, props) => ({
       defaultScaleArr: state.defaultScaleArr = finalScaleArr,
-      defaultYOffset: state.defaultYOffset = yOffset,
+      defaultYOffSet: state.defaultYOffSet = yOffset,
       defaultXOffSet: state.defaultXOffSet = xOffset
     }))
   }
@@ -158,7 +159,7 @@ class App extends Component {
       this.setState((state) => ({
         currZoom: state.currZoom = this.state.currZoom + 1,
         zoomXOffSet: state.zoomXOffSet = -zoomAmountX,
-        zoomYOffset: state.zoomYOffSet = -zoomAmountY + this.state.defaultYOffset
+        zoomYOffSet: state.zoomYOffSet = -zoomAmountY + this.state.defaultYOffSet
       }))
     }
     setTimeout(() => {
@@ -172,9 +173,8 @@ class App extends Component {
       zoom.style.transition = "0.3s"
       this.setState((state) => ({
         currZoom: state.currZoom = this.state.currZoom - 1,
-        zoomYOffset: state.zoomYOffSet = this.state.defaultYOffset
+        zoomYOffSet: state.zoomYOffSet = this.state.defaultYOffSet
       }))
-          console.log(this.state.zoomYOffSet)
     }
     setTimeout(() => {
       zoom.style.transition = null
@@ -197,7 +197,7 @@ class App extends Component {
                  onLoad={this.handleLoad}
                  style={{transform: `scale(${this.state.defaultScaleArr[this.state.currZoom]})
                                      translateX(${this.state.currZoom === 0 ? this.state.defaultXOffSet : this.state.zoomXOffSet}px)
-                                     translateY(${this.state.currZoom === 0 ? this.state.defaultYOffset : this.state.zoomYOffSet}px)`}}
+                                     translateY(${this.state.currZoom === 0 ? this.state.defaultYOffSet : this.state.zoomYOffSet}px)`}}
                  alt={this.props.mapName}
                  useMap="#image-map"
                  onMouseDown={this.handleClickDown}
