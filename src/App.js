@@ -13,7 +13,8 @@ class App extends Component {
     defaultYOffSet: 0,
     zoomXOffSet: 0,
     zoomYOffSet: 0,
-    multiplyerX: 0,
+    natContX: 0,
+    natContY: 0,
     zoomCenterAmount: 0
   }
 
@@ -68,9 +69,10 @@ class App extends Component {
       let scaleMult = e.target.parentElement.clientWidth / (width * finalScale)
       let imgMult = width * scaleMult
       xOffset = (imgMult - width) / 2
-      console.log(scaleMult,imgMult,width,finalScale)
+      console.log(imgMult)
       this.setState((state, props) => ({
-        multiplyerX: state.multiplyerX = scaleMult
+        natContX: state.natContX = imgMult,
+        natContY: state.natContY = height
       }))
     } else {
       finalScale = widthScale
@@ -78,7 +80,8 @@ class App extends Component {
       let imgMult = height * scaleMult
       yOffset = (imgMult - height) / 2
       this.setState((state, props) => ({
-        multiplyerX: state.multiplyerX = scaleMult
+        natContY: state.natContY = imgMult,
+        natContX: state.natContX = width
       }))
     }
 
@@ -118,7 +121,8 @@ class App extends Component {
       xOffset = (imgMult - this.state.imgWidth) / 2
       yOffset = 0
       this.setState((state, props) => ({
-        multiplyerX: state.multiplyerX = scaleMult
+        natContX: state.natContX = imgMult,
+        natContY: state.natContY = this.state.imgHeight
       }))
     } else {
       newScaleFinal = newScaleWidth
@@ -127,7 +131,8 @@ class App extends Component {
       yOffset = (imgMult - this.state.imgHeight) / 2
       xOffset = 0
       this.setState((state, props) => ({
-        multiplyerX: state.multiplyerX = scaleMult
+        natContY: state.natContY = imgMult,
+        natContX: state.natContX = this.state.imgWidth
       }))
     }
 
@@ -151,15 +156,17 @@ class App extends Component {
 
   handleZoomIn = () => {
     let zoom = document.getElementsByClassName("mapContainer")[0].childNodes[0]
-    let zoomAmountY = ((this.state.imgHeight * this.state.defaultScaleArr[this.state.currZoom + 1]) - (this.state.imgWidth * this.state.defaultScaleArr[this.state.currZoom]))
-    let zoomAmountX = ((this.state.imgWidth * this.state.defaultScaleArr[this.state.currZoom + 1]) - (this.state.imgWidth * this.state.defaultScaleArr[this.state.currZoom]))
+    console.log(zoom)
+    let zoomAmountY = ((this.state.imgHeight / 2) * ((((this.state.currZoom + 1) * 25) * 0.01) + 1) - (this.state.natContY / 2 )) * ((2048 * this.state.defaultScaleArr[this.state.currZoom]) / (2048 * this.state.defaultScaleArr[this.state.currZoom + 1]))
+    let zoomAmountX = ((this.state.imgWidth / 2) * ((((this.state.currZoom + 1) * 25) * 0.01) + 1) - (this.state.natContX / 2)) * ((2048 * this.state.defaultScaleArr[this.state.currZoom]) / (2048 * this.state.defaultScaleArr[this.state.currZoom + 1]))
+
     console.log(this.state.multiplyerX)
     if (this.state.currZoom !== 3) {
       zoom.style.transition = "0.3s"
       this.setState((state) => ({
         currZoom: state.currZoom = this.state.currZoom + 1,
         zoomXOffSet: state.zoomXOffSet = -zoomAmountX,
-        zoomYOffSet: state.zoomYOffSet = -zoomAmountY + this.state.defaultYOffSet
+        zoomYOffSet: state.zoomYOffSet = -zoomAmountY
       }))
     }
     setTimeout(() => {
