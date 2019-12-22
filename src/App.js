@@ -156,11 +156,14 @@ class App extends Component {
 
   handleZoomIn = () => {
     let zoom = document.getElementsByClassName("mapContainer")[0].childNodes[0]
-    console.log(zoom)
-    let zoomAmountY = ((this.state.imgHeight / 2) * ((((this.state.currZoom + 1) * 25) * 0.01) + 1) - (this.state.natContY / 2 )) * ((2048 * this.state.defaultScaleArr[this.state.currZoom]) / (2048 * this.state.defaultScaleArr[this.state.currZoom + 1]))
-    let zoomAmountX = ((this.state.imgWidth / 2) * ((((this.state.currZoom + 1) * 25) * 0.01) + 1) - (this.state.natContX / 2)) * ((2048 * this.state.defaultScaleArr[this.state.currZoom]) / (2048 * this.state.defaultScaleArr[this.state.currZoom + 1]))
+    let imgHeightCent = (this.state.imgHeight / 2)
+    let imgWidthCent = (this.state.imgWidth / 2)
+    let multFact = ((((this.state.currZoom + 1) * 25) * 0.01) + 1)
+    let contHeightCent = (this.state.natContY / 2 )
+    let contWidthCent = (this.state.natContX / 2 )
+    let zoomAmountY = ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
+    let zoomAmountX = ((imgWidthCent * multFact) - contWidthCent) * (contWidthCent / (contWidthCent * multFact))
 
-    console.log(this.state.multiplyerX)
     if (this.state.currZoom !== 3) {
       zoom.style.transition = "0.3s"
       this.setState((state) => ({
@@ -176,11 +179,20 @@ class App extends Component {
 
   handleZoomOut = () => {
     let zoom = document.getElementsByClassName("mapContainer")[0].childNodes[0]
+    let imgHeightCent = (this.state.imgHeight / 2)
+    let imgWidthCent = (this.state.imgWidth / 2)
+    let multFact = ((((this.state.currZoom + 1) * 25) * 0.01) + 1)
+    let contHeightCent = (this.state.natContY / 2 )
+    let contWidthCent = (this.state.natContX / 2 )
+    let zoomAmountY = ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
+    let zoomAmountX = ((imgWidthCent * multFact) - contWidthCent) * (contWidthCent / (contWidthCent * multFact))
+
     if (this.state.currZoom !== 0) {
       zoom.style.transition = "0.3s"
       this.setState((state) => ({
         currZoom: state.currZoom = this.state.currZoom - 1,
-        zoomYOffSet: state.zoomYOffSet = this.state.defaultYOffSet
+        zoomXOffSet: state.zoomXOffSet = -zoomAmountX,
+        zoomYOffSet: state.zoomYOffSet = -zoomAmountY
       }))
     }
     setTimeout(() => {
