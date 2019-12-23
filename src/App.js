@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {handleMap} from './actions/actions';
+
 
 class App extends Component {
 
@@ -105,6 +107,8 @@ class App extends Component {
       zoomXOffSet: state.zoomXOffSet = xOffset,
       zoomYOffSet: state.zoomYOffSet = yOffset
     }))
+
+    console.log("Handle Load")
   }
 
   updateWindowDimensions = () => {
@@ -200,6 +204,10 @@ class App extends Component {
     }, 150)
   }
 
+  handleMap = (page) => {
+    this.props.handleMap(1)
+  }
+
   render() {
       return (
         <div className="centerColumn">
@@ -207,12 +215,12 @@ class App extends Component {
           <p className="titleText">
             {this.props.mapData}
           </p>
-          <p className="navText">
+          <p className="navText" onClick={this.handleMap}>
             Lakeland - Tyger | Next | This | That
           </p>
           </div>
           <div className="mapContainer">
-            <img src={`/maps/${this.props.mapName}.jpg`}
+            <img src={`/maps/${this.props.mapName[this.props.mapSelect]}.jpg`}
                  onLoad={this.handleLoad}
                  style={{transform: `scale(${this.state.defaultScaleArr[this.state.currZoom]})
                                      translateX(${this.state.currZoom === 0 ? this.state.defaultXOffSet : this.state.zoomXOffSet}px)
@@ -241,7 +249,12 @@ class App extends Component {
 
   const mapStateToProps = state => ({
     mapData: state.mapData,
-    mapName: state.mapName
+    mapName: state.mapName,
+    mapSelect: state.mapSelect
   })
 
-export default connect(mapStateToProps,null)(App);
+  const mapDispatchToProps = dispatch => ({
+    handleMap: (page) => dispatch(handleMap(page))
+  })
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);
