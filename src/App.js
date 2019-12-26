@@ -17,7 +17,8 @@ class App extends Component {
     zoomYOffSet: 0,
     natContX: 0,
     natContY: 0,
-    zoomCenterAmount: 0
+    zoomCenterAmount: 0,
+    offsetZoomArr: []
   }
 
   componentDidMount = () => {
@@ -65,13 +66,16 @@ class App extends Component {
     let finalScale = 0
     let xOffset = 0
     let yOffset = 0
+    let natContYa = 0
+    let natContXa = 0
 
     if (height * widthScale > e.target.parentElement.clientHeight) {
       finalScale = heightScale
       let scaleMult = e.target.parentElement.clientWidth / (width * finalScale)
       let imgMult = width * scaleMult
       xOffset = (imgMult - width) / 2
-      console.log(imgMult)
+      natContYa = height
+      natContXa = imgMult
       this.setState((state, props) => ({
         natContX: state.natContX = imgMult,
         natContY: state.natContY = height
@@ -81,6 +85,8 @@ class App extends Component {
       let scaleMult = e.target.parentElement.clientHeight / (height * finalScale)
       let imgMult = height * scaleMult
       yOffset = (imgMult - height) / 2
+      natContYa = imgMult
+      natContXa = width
       this.setState((state, props) => ({
         natContY: state.natContY = imgMult,
         natContX: state.natContX = width
@@ -89,11 +95,20 @@ class App extends Component {
 
     let finalScaleArr = []
     let i = 0
+    let offsetZoomArr = {}
 
     for (i = 0; i < 4; i++) {
       if (i === 0) {
         finalScaleArr.push(finalScale)
       } else {
+        let imgHeightCent = (height / 2)
+        let imgWidthCent = (width / 2)
+        let multFact = (((i  * 25) * 0.01) + 1)
+        let contHeightCent = (natContYa / 2 )
+        let contWidthCent = (natContXa / 2 )
+        let zoomAmountY = ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
+        let zoomAmountX = ((imgWidthCent * multFact) - contWidthCent) * (contWidthCent / (contWidthCent * multFact))
+        offsetZoomArr[i] = {yAxis: -zoomAmountY, xAxis: -zoomAmountX}
         finalScaleArr.push(finalScale * (((i * 25) * 0.01)+1))
       }
     }
@@ -105,7 +120,8 @@ class App extends Component {
       defaultYOffSet: state.defaultYOffSet = yOffset,
       defaultXOffSet: state.defaultXOffSet = xOffset,
       zoomXOffSet: state.zoomXOffSet = xOffset,
-      zoomYOffSet: state.zoomYOffSet = yOffset
+      zoomYOffSet: state.zoomYOffSet = yOffset,
+      offsetZoomArr: state.offsetZoomArr = offsetZoomArr
     }))
 
     console.log("Handle Load")
@@ -160,20 +176,10 @@ class App extends Component {
 
   handleZoomIn = () => {
     let zoom = document.getElementsByClassName("mapContainer")[0].childNodes[0]
-    let imgHeightCent = (this.state.imgHeight / 2)
-    let imgWidthCent = (this.state.imgWidth / 2)
-    let multFact = ((((this.state.currZoom + 1) * 25) * 0.01) + 1)
-    let contHeightCent = (this.state.natContY / 2 )
-    let contWidthCent = (this.state.natContX / 2 )
-    let zoomAmountY = ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
-    let zoomAmountX = ((imgWidthCent * multFact) - contWidthCent) * (contWidthCent / (contWidthCent * multFact))
-
     if (this.state.currZoom !== 3) {
       zoom.style.transition = "0.3s"
       this.setState((state) => ({
-        currZoom: state.currZoom = this.state.currZoom + 1,
-        zoomXOffSet: state.zoomXOffSet = -zoomAmountX,
-        zoomYOffSet: state.zoomYOffSet = -zoomAmountY
+        currZoom: state.currZoom = this.state.currZoom + 1
       }))
     }
     setTimeout(() => {
@@ -183,20 +189,10 @@ class App extends Component {
 
   handleZoomOut = () => {
     let zoom = document.getElementsByClassName("mapContainer")[0].childNodes[0]
-    let imgHeightCent = (this.state.imgHeight / 2)
-    let imgWidthCent = (this.state.imgWidth / 2)
-    let multFact = ((((this.state.currZoom + 1) * 25) * 0.01) + 1)
-    let contHeightCent = (this.state.natContY / 2 )
-    let contWidthCent = (this.state.natContX / 2 )
-    let zoomAmountY = ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
-    let zoomAmountX = ((imgWidthCent * multFact) - contWidthCent) * (contWidthCent / (contWidthCent * multFact))
-
     if (this.state.currZoom !== 0) {
       zoom.style.transition = "0.3s"
       this.setState((state) => ({
-        currZoom: state.currZoom = this.state.currZoom - 1,
-        zoomXOffSet: state.zoomXOffSet = -zoomAmountX,
-        zoomYOffSet: state.zoomYOffSet = -zoomAmountY
+        currZoom: state.currZoom = this.state.currZoom - 1
       }))
     }
     setTimeout(() => {
