@@ -52,8 +52,6 @@ class App extends Component {
       this.setState((state, props) =>({
         zoomXOffSet: state.zoomXOffSet = newXTrim,
         zoomYOffSet: state.zoomYOffSet = newYTrim
-        // defaultXOffSet: state.defaultXOffSet = newXTrim,
-        // defaultYOffSet: state.defaultYOffSet = newYTrim
       }))
     }
   }
@@ -110,7 +108,6 @@ class App extends Component {
         let zoomAmountY = yOffset + ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
         let zoomAmountX = xOffset + ((imgWidthCent * multFact) - contWidthCent) * (contWidthCent / (contWidthCent * multFact))
         offsetZoomArrTemp[i] = {yAxis: zoomAmountY, xAxis: zoomAmountX}
-        // offsetZoomArr[i] = {yAxis: zoomAmountY, xAxis: zoomAmountX}
         if (i === 1) {
           offsetZoomArr[i] = {yAxis:(offsetZoomArrTemp[i].yAxis) ,xAxis:(offsetZoomArrTemp[i].xAxis)}
         } else if (i > 1) {
@@ -201,12 +198,21 @@ class App extends Component {
     let zoom = document.getElementsByClassName("mapContainer")[0].childNodes[0]
 
     if (this.state.currZoom !== 0) {
-      zoom.style.transition = "0.3s"
-      this.setState((state) => ({
-        currZoom: state.currZoom = this.state.currZoom - 1,
-        zoomXOffSet: state.zoomXOffSet = this.state.zoomXOffSet + this.state.offsetZoomArr[this.state.currZoom + 1].xAxis,
-        zoomYOffSet: state.zoomYOffSet = this.state.zoomYOffSet + this.state.offsetZoomArr[this.state.currZoom + 1].yAxis
-      }))
+      if (this.state.currZoom === 1) {
+        zoom.style.transition = "0.3s"
+        this.setState((state) => ({
+          currZoom: state.currZoom = this.state.currZoom - 1,
+          zoomXOffSet: state.zoomXOffSet = this.state.defaultXOffSet,
+          zoomYOffSet: state.zoomYOffSet = this.state.defaultYOffSet
+        }))
+      } else if (this.state.currZoom > 1) {
+        zoom.style.transition = "0.3s"
+        this.setState((state) => ({
+          currZoom: state.currZoom = this.state.currZoom - 1,
+          zoomXOffSet: state.zoomXOffSet = this.state.zoomXOffSet + this.state.offsetZoomArr[this.state.currZoom + 1].xAxis,
+          zoomYOffSet: state.zoomYOffSet = this.state.zoomYOffSet + this.state.offsetZoomArr[this.state.currZoom + 1].yAxis
+        }))
+      }
     }
     setTimeout(() => {
       zoom.style.transition = null
