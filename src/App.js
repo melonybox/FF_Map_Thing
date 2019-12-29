@@ -95,6 +95,7 @@ class App extends Component {
 
     let finalScaleArr = []
     let i = 0
+    let offsetZoomArrTemp = {}
     let offsetZoomArr = {}
 
     for (i = 0; i < 4; i++) {
@@ -108,7 +109,13 @@ class App extends Component {
         let contWidthCent = (natContXa / 2 )
         let zoomAmountY = yOffset + ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
         let zoomAmountX = xOffset + ((imgWidthCent * multFact) - contWidthCent) * (contWidthCent / (contWidthCent * multFact))
-        offsetZoomArr[i] = {yAxis: zoomAmountY, xAxis: zoomAmountX}
+        offsetZoomArrTemp[i] = {yAxis: zoomAmountY, xAxis: zoomAmountX}
+        // offsetZoomArr[i] = {yAxis: zoomAmountY, xAxis: zoomAmountX}
+        if (i === 1) {
+          offsetZoomArr[i] = {yAxis:(offsetZoomArrTemp[i].yAxis) ,xAxis:(offsetZoomArrTemp[i].xAxis)}
+        } else if (i > 1) {
+          offsetZoomArr[i] = {yAxis:(offsetZoomArrTemp[i].yAxis - offsetZoomArrTemp[i - 1].yAxis) ,xAxis: (offsetZoomArrTemp[i].xAxis - offsetZoomArrTemp[i - 1].xAxis)}
+        }
         finalScaleArr.push(finalScale * (((i * 25) * 0.01)+1))
       }
     }
@@ -176,22 +183,13 @@ class App extends Component {
 
   handleZoomIn = () => {
     let zoom = document.getElementsByClassName("mapContainer")[0].childNodes[0]
-    let xAxisDiff = 0
-    let yAxisDiff = 0
 
     if (this.state.currZoom !== 3) {
-      if (this.state.currZoom === 0) {
-        xAxisDiff = this.state.offsetZoomArr[this.state.currZoom + 1].xAxis
-        yAxisDiff = this.state.offsetZoomArr[this.state.currZoom + 1].yAxis
-      } else if (this.state.currZoom !== 0) {
-        xAxisDiff = this.state.offsetZoomArr[this.state.currZoom + 1].xAxis - this.state.offsetZoomArr[this.state.currZoom].xAxis
-        yAxisDiff = this.state.offsetZoomArr[this.state.currZoom + 1].yAxis - this.state.offsetZoomArr[this.state.currZoom].yAxis
-      }
       zoom.style.transition = "0.3s"
       this.setState((state) => ({
         currZoom: state.currZoom = this.state.currZoom + 1,
-        zoomXOffSet: state.zoomXOffSet = this.state.zoomXOffSet - xAxisDiff,
-        zoomYOffSet: state.zoomYOffSet = this.state.zoomYOffSet - yAxisDiff
+        zoomXOffSet: state.zoomXOffSet = this.state.zoomXOffSet - this.state.offsetZoomArr[this.state.currZoom].xAxis,
+        zoomYOffSet: state.zoomYOffSet = this.state.zoomYOffSet - this.state.offsetZoomArr[this.state.currZoom].yAxis
       }))
     }
     setTimeout(() => {
@@ -201,22 +199,13 @@ class App extends Component {
 
   handleZoomOut = () => {
     let zoom = document.getElementsByClassName("mapContainer")[0].childNodes[0]
-    let xAxisDiff = 0
-    let yAxisDiff = 0
 
     if (this.state.currZoom !== 0) {
-      if (this.state.currZoom === 1) {
-        xAxisDiff = this.state.offsetZoomArr[this.state.currZoom].xAxis
-        yAxisDiff = this.state.offsetZoomArr[this.state.currZoom].yAxis
-      } else if (this.state.currZoom !== 1) {
-        xAxisDiff = this.state.offsetZoomArr[this.state.currZoom].xAxis - this.state.offsetZoomArr[this.state.currZoom - 1].xAxis
-        yAxisDiff = this.state.offsetZoomArr[this.state.currZoom].yAxis - this.state.offsetZoomArr[this.state.currZoom - 1].yAxis
-      }
       zoom.style.transition = "0.3s"
       this.setState((state) => ({
         currZoom: state.currZoom = this.state.currZoom - 1,
-        zoomXOffSet: state.zoomXOffSet = this.state.zoomXOffSet + xAxisDiff,
-        zoomYOffSet: state.zoomYOffSet = this.state.zoomYOffSet + yAxisDiff
+        zoomXOffSet: state.zoomXOffSet = this.state.zoomXOffSet + this.state.offsetZoomArr[this.state.currZoom + 1].xAxis,
+        zoomYOffSet: state.zoomYOffSet = this.state.zoomYOffSet + this.state.offsetZoomArr[this.state.currZoom + 1].yAxis
       }))
     }
     setTimeout(() => {
