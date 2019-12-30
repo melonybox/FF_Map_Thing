@@ -15,10 +15,9 @@ class App extends Component {
     defaultYOffSet: 0,
     zoomXOffSet: 0,
     zoomYOffSet: 0,
-    natContX: 0,
-    natContY: 0,
     zoomCenterAmount: 0,
-    offsetZoomArr: []
+    offsetZoomArr: {},
+    boundingOffSetArr: {}
   }
 
   componentDidMount = () => {
@@ -74,10 +73,6 @@ class App extends Component {
       xOffset = (imgMult - width) / 2
       natContYa = height
       natContXa = imgMult
-      this.setState((state, props) => ({
-        natContX: state.natContX = imgMult,
-        natContY: state.natContY = height
-      }))
     } else {
       finalScale = widthScale
       let scaleMult = e.target.parentElement.clientHeight / (height * finalScale)
@@ -85,21 +80,19 @@ class App extends Component {
       yOffset = (imgMult - height) / 2
       natContYa = imgMult
       natContXa = width
-      this.setState((state, props) => ({
-        natContY: state.natContY = imgMult,
-        natContX: state.natContX = width
-      }))
     }
 
     let finalScaleArr = []
     let i = 0
     let offsetZoomArrTemp = {}
     let offsetZoomArr = {}
+    let boundingOffSetArr = {}
 
     for (i = 0; i < 4; i++) {
       if (i === 0) {
         finalScaleArr.push(finalScale)
       } else {
+        finalScaleArr.push(finalScale * (((i * 25) * 0.01)+1))
         let imgHeightCent = (height / 2)
         let imgWidthCent = (width / 2)
         let multFact = (((i  * 25) * 0.01) + 1)
@@ -108,12 +101,12 @@ class App extends Component {
         let zoomAmountY = yOffset + ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
         let zoomAmountX = xOffset + ((imgWidthCent * multFact) - contWidthCent) * (contWidthCent / (contWidthCent * multFact))
         offsetZoomArrTemp[i] = {yAxis: zoomAmountY, xAxis: zoomAmountX}
+        boundingOffSetArr[i] = {yAxis: -((zoomAmountY - yOffset)*2), xAxis: -((zoomAmountX - xOffset)*2)}
         if (i === 1) {
-          offsetZoomArr[i] = {yAxis:(offsetZoomArrTemp[i].yAxis) ,xAxis:(offsetZoomArrTemp[i].xAxis)}
+          offsetZoomArr[i] = {yAxis: offsetZoomArrTemp[i].yAxis ,xAxis: offsetZoomArrTemp[i].xAxis}
         } else if (i > 1) {
           offsetZoomArr[i] = {yAxis:(offsetZoomArrTemp[i].yAxis - offsetZoomArrTemp[i - 1].yAxis) ,xAxis: (offsetZoomArrTemp[i].xAxis - offsetZoomArrTemp[i - 1].xAxis)}
         }
-        finalScaleArr.push(finalScale * (((i * 25) * 0.01)+1))
       }
     }
 
@@ -125,7 +118,9 @@ class App extends Component {
       defaultXOffSet: state.defaultXOffSet = xOffset,
       zoomXOffSet: state.zoomXOffSet = xOffset,
       zoomYOffSet: state.zoomYOffSet = yOffset,
-      offsetZoomArr: state.offsetZoomArr = offsetZoomArr
+      offsetZoomArr: state.offsetZoomArr = offsetZoomArr,
+      boundingOffSetArr: state.boundingOffSetArr = boundingOffSetArr,
+      currZoom: state.currZoom = 0
     }))
 
     console.log("Handle Load")
@@ -144,20 +139,12 @@ class App extends Component {
       let imgMult = this.state.imgWidth * scaleMult
       xOffset = (imgMult - this.state.imgWidth) / 2
       yOffset = 0
-      this.setState((state, props) => ({
-        natContX: state.natContX = imgMult,
-        natContY: state.natContY = this.state.imgHeight
-      }))
     } else {
       newScaleFinal = newScaleWidth
       let scaleMult = document.getElementsByClassName("mapContainer")[0].clientHeight / (this.state.imgHeight * newScaleFinal)
       let imgMult = this.state.imgHeight * scaleMult
       yOffset = (imgMult - this.state.imgHeight) / 2
       xOffset = 0
-      this.setState((state, props) => ({
-        natContY: state.natContY = imgMult,
-        natContX: state.natContX = this.state.imgWidth
-      }))
     }
 
     let finalScaleArr = []
@@ -244,7 +231,8 @@ class App extends Component {
                  useMap="#image-map"
                  onMouseDown={this.handleClickDown}
                  onMouseUp={this.handleClickUp}
-                 onMouseMove={this.handleMouseMove}>
+                 onMouseMove={this.handleMouseMove}
+                 onMouseLeave={this.handleClickUp}>
             </img>
             <map name="image-map">
               <area style={{cursor: "pointer"}} alt="a" title="a" coords="947,450,922,425" shape="rect" />
