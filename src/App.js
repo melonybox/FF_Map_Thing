@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {handleMap} from './actions/actions';
+import {handleMap} from './actions/actions.js';
+import MapBox from './containers/mapBox.js'
 
 
 class App extends Component {
@@ -255,6 +256,7 @@ class App extends Component {
               <p>X</p>
             </div>
           </div>
+          <MapBox />
         </div>
       );
     }
