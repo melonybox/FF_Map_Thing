@@ -3,11 +3,22 @@ import {connect} from 'react-redux';
 
 class MapComponent extends React.PureComponent {
 
+  componentDidMount = () => {
+    console.log("Resize Run")
+    window.addEventListener('resize', this.handleLoad);
+  }
+
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.handeLoad);
+  }
+
   handleLoad = (e) => {
-    let imgWidth = e.target.width
-    let imgHeight = e.target.height
-    let contWidth = e.target.parentElement.clientWidth
-    let contHeight = e.target.parentElement.clientHeight
+    let mapImage = document.getElementById("mapImage")
+    let mapCont = document.getElementById("mapCont")
+    let imgWidth = mapImage.width
+    let imgHeight = mapImage.height
+    let contWidth = mapCont.clientWidth
+    let contHeight = mapCont.clientHeight
     let widthScale = contWidth / imgWidth
     let heightScale = contHeight / imgHeight
     let defaultScale = 0
@@ -80,6 +91,7 @@ class MapComponent extends React.PureComponent {
     return(
       <div>
         <img src={`/maps/${this.props.mapName[this.props.mapSelect]}.jpg`}
+          id="mapImage"
           onLoad={this.handleLoad}>
         </img>
         <map name="image-map">
