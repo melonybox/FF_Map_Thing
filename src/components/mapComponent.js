@@ -12,20 +12,20 @@ class MapComponent extends React.PureComponent {
     window.removeEventListener('resize', this.handeLoad);
   }
 
-  handleLoad = (e) => {
+  handleLoad = () => {
     let mapImage = document.getElementById("mapImage")
     let mapCont = document.getElementById("mapCont")
     let imgWidth = mapImage.width
     let imgHeight = mapImage.height
-    let contWidth = mapCont.clientWidth
-    let contHeight = mapCont.clientHeight
-    let widthScale = contWidth / imgWidth
-    let heightScale = contHeight / imgHeight
+    let imgContWidth = mapCont.clientWidth
+    let imgContHeight = mapCont.clientHeight
+    let widthScale = imgContWidth / imgWidth
+    let heightScale = imgContHeight / imgHeight
     let defaultScale = 0
     let defaultXOffset = 0
     let defaultYOffset = 0
-    let natContX = 0
-    let natContY = 0
+    let imgContX = 0
+    let imgContY = 0
 
     // if (height * widthScale > e.target.parentElement.clientHeight) {
     //   finalScale = heightScale
