@@ -27,27 +27,27 @@ class MapComponent extends React.PureComponent {
     let imgContX = 0
     let imgContY = 0
 
-    // if (height * widthScale > e.target.parentElement.clientHeight) {
-    //   finalScale = heightScale
-    //   let scaleMult = e.target.parentElement.clientWidth / (width * finalScale)
-    //   let imgMult = width * scaleMult
-    //   xOffset = (imgMult - width) / 2
-    //   natContYa = height
-    //   natContXa = imgMult
-    // } else {
-    //   finalScale = widthScale
-    //   let scaleMult = e.target.parentElement.clientHeight / (height * finalScale)
-    //   let imgMult = height * scaleMult
-    //   yOffset = (imgMult - height) / 2
-    //   natContYa = imgMult
-    //   natContXa = width
-    // }
+    if (imgHeight * widthScale > imgContHeight) {
+      defaultScale = heightScale
+      let scaleMult = imgContWidth / (imgWidth * defaultScale)
+      let imgMult = imgWidth * scaleMult
+      defaultXOffset = (imgMult - imgWidth) / 2
+      imgContY = imgHeight
+      imgContX = imgMult
+    } else {
+      defaultScale = widthScale
+      let scaleMult = imgContHeight / (imgHeight * defaultScale)
+      let imgMult = imgHeight * scaleMult
+      defaultYOffset = (imgMult - imgHeight) / 2
+      imgContY = imgMult
+      imgContX = imgWidth
+    }
     //
-    // let finalScaleArr = []
-    // let i = 0
-    // let offsetZoomArrTemp = {}
-    // let offsetZoomArr = {}
-    // let boundingOffSetArr = {}
+    let finalScaleArr = []
+    let i = 0
+    let offsetZoomArrTemp = {}
+    let offsetZoomArr = {}
+    let boundingOffSetArr = {}
     //
     // for (i = 0; i < 4; i++) {
     //   if (i === 0) {
@@ -89,15 +89,16 @@ class MapComponent extends React.PureComponent {
 
   render(){
     return(
-      <div>
+      <>
         <img src={`/maps/${this.props.mapName[this.props.mapSelect]}.jpg`}
           id="mapImage"
+          alt={this.props.mapName}
           onLoad={this.handleLoad}>
         </img>
         <map name="image-map">
           <area style={{cursor: "pointer"}} alt="a" title="a" coords="947,450,922,425" shape="rect" />
         </map>
-      </div>
+      </>
     )
   }
 }
