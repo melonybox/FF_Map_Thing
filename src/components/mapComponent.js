@@ -27,22 +27,28 @@ class MapComponent extends React.PureComponent {
     let imgContX = 0
     let imgContY = 0
 
-    if (imgHeight * widthScale > imgContHeight) {
+    let scaleMult = 0
+    let imgContPixel = 0
+
+    if (imgWidth * widthScale > imgContHeight) {
+      //simple ratio finder, if width is greater then center the width
       defaultScale = heightScale
-      let scaleMult = imgContWidth / (imgWidth * defaultScale)
-      let imgMult = imgWidth * scaleMult
-      defaultXOffset = (imgMult - imgWidth) / 2
+      scaleMult = imgContWidth / (imgWidth * defaultScale)
+      //multiplyier needed to find image container width at image native resolution
+      imgContPixel = imgWidth * scaleMult
+      //image container width in px at image native resolution
+      defaultXOffset = (imgContPixel - imgWidth) / 2
       imgContY = imgHeight
-      imgContX = imgMult
+      imgContX = imgContPixel
     } else {
       defaultScale = widthScale
-      let scaleMult = imgContHeight / (imgHeight * defaultScale)
-      let imgMult = imgHeight * scaleMult
-      defaultYOffset = (imgMult - imgHeight) / 2
-      imgContY = imgMult
+      scaleMult = imgContHeight / (imgHeight * defaultScale)
+      imgContPixel = imgHeight * scaleMult
+      defaultYOffset = (imgContPixel - imgHeight) / 2
+      imgContY = imgContPixel
       imgContX = imgWidth
     }
-    //
+
     let finalScaleArr = []
     let i = 0
     let offsetZoomArrTemp = {}

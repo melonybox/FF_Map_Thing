@@ -77,7 +77,7 @@ class App extends Component {
     let natContYa = 0
     let natContXa = 0
 
-    if (height * widthScale > e.target.parentElement.clientHeight) {
+    if (width * widthScale > e.target.parentElement.clientHeight) {
       finalScale = heightScale
       let scaleMult = e.target.parentElement.clientWidth / (width * finalScale)
       let imgMult = width * scaleMult
