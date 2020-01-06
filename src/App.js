@@ -49,9 +49,11 @@ class App extends Component {
     if (this.state.click === true) {
       let newXTrim = this.state.zoomXOffSet + (e.movementX/this.state.defaultScaleArr[this.state.currZoom])
       let newYTrim = this.state.zoomYOffSet + (e.movementY/this.state.defaultScaleArr[this.state.currZoom])
-      if (newYTrim <= this.state.boundingOffSetArr[this.state.currZoom].yAxis) {
+      console.log(newXTrim,this.state.boundingOffSetArr[this.state.currZoom].xAxis)
+
+      if (newYTrim >= this.state.boundingOffSetArr[this.state.currZoom].yAxis) {
         newYTrim = this.state.boundingOffSetArr[this.state.currZoom].yAxis
-      } else if (newYTrim >= 0) {
+      } else if (newYTrim <= 0) {
         newYTrim = 0
       }
       if (newXTrim <= this.state.boundingOffSetArr[this.state.currZoom].xAxis) {
@@ -77,7 +79,9 @@ class App extends Component {
     let natContYa = 0
     let natContXa = 0
 
-    if (width * widthScale > e.target.parentElement.clientHeight) {
+    console.log(widthScale,heightScale)
+
+    if (heightScale < widthScale) {
       finalScale = heightScale
       let scaleMult = e.target.parentElement.clientWidth / (width * finalScale)
       let imgMult = width * scaleMult

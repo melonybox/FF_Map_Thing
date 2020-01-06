@@ -30,7 +30,7 @@ class MapComponent extends React.PureComponent {
     let scaleMult = 0
     let imgContPixel = 0
 
-    if (imgWidth * widthScale > imgContHeight) {
+    if (imgWidth * widthScale < imgContHeight) {
       //simple ratio finder, if width is greater then center the width
       defaultScale = heightScale
       scaleMult = imgContWidth / (imgWidth * defaultScale)
@@ -49,7 +49,7 @@ class MapComponent extends React.PureComponent {
       imgContX = imgWidth
     }
 
-    let finalScaleArr = []
+    let masterScaleArr = []
     let i = 0
     let offsetZoomArrTemp = {}
     let offsetZoomArr = {}
