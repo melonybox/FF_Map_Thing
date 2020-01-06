@@ -30,7 +30,7 @@ class MapComponent extends React.PureComponent {
     let scaleMult = 0
     let imgContPixel = 0
 
-    if (imgWidth * widthScale < imgContHeight) {
+    if (heightScale < widthScale) {
       //simple ratio finder, if width is greater then center the width
       defaultScale = heightScale
       scaleMult = imgContWidth / (imgWidth * defaultScale)

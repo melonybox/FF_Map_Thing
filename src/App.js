@@ -49,7 +49,6 @@ class App extends Component {
     if (this.state.click === true) {
       let newXTrim = this.state.zoomXOffSet + (e.movementX/this.state.defaultScaleArr[this.state.currZoom])
       let newYTrim = this.state.zoomYOffSet + (e.movementY/this.state.defaultScaleArr[this.state.currZoom])
-      console.log(newXTrim,this.state.boundingOffSetArr[this.state.currZoom].xAxis)
 
       if (newYTrim >= this.state.boundingOffSetArr[this.state.currZoom].yAxis) {
         newYTrim = this.state.boundingOffSetArr[this.state.currZoom].yAxis
