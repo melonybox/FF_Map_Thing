@@ -49,17 +49,17 @@ class App extends Component {
     if (this.state.click === true) {
       let newXTrim = this.state.zoomXOffSet + (e.movementX/this.state.defaultScaleArr[this.state.currZoom])
       let newYTrim = this.state.zoomYOffSet + (e.movementY/this.state.defaultScaleArr[this.state.currZoom])
-
-      if (newYTrim >= this.state.boundingOffSetArr[this.state.currZoom].yAxis) {
-        newYTrim = this.state.boundingOffSetArr[this.state.currZoom].yAxis
-      } else if (newYTrim <= 0) {
-        newYTrim = 0
+      if (newYTrim > 0 || newYTrim < this.state.boundingOffSetArr[this.state.currZoom].yAxis) {
+        newYTrim = (newYTrim > 0) ? 0 : this.state.boundingOffSetArr[this.state.currZoom].yAxis
       }
-      if (newXTrim <= this.state.boundingOffSetArr[this.state.currZoom].xAxis) {
-        newXTrim = this.state.boundingOffSetArr[this.state.currZoom].xAxis
-      } else if (newXTrim >= 0) {
-        newXTrim = 0
+      if (newXTrim > 0 || newXTrim < this.state.boundingOffSetArr[this.state.currZoom].xAxis) {
+        newXTrim = (newXTrim > 0) ? 0 : this.state.boundingOffSetArr[this.state.currZoom].xAxis
       }
+      // if (newXTrim <= this.state.boundingOffSetArr[this.state.currZoom].xAxis) {
+      //   newXTrim = this.state.boundingOffSetArr[this.state.currZoom].xAxis
+      // } else if (newXTrim >= 0) {
+      //   newXTrim = 0
+      // }
       this.setState((state, props) =>({
         zoomXOffSet: state.zoomXOffSet = newXTrim,
         zoomYOffSet: state.zoomYOffSet = newYTrim
