@@ -3,6 +3,7 @@ const initialState = {
   mapName: ["Lakeland_-_Tyger","Kholusia_-_Forgiven_Pedantry"],
   mapSelect: 0,
   mapZoomInfo: {},
+  mapLoaded: false,
   click: false,
   currZoom: 0,
   defaultXOffset: 0,
@@ -18,7 +19,8 @@ export default function reducer(state = initialState, action) {
       case 'HANDLE_MAP_DATA':
         return {...state, mapZoomInfo: action.payload.mapZoomInfo,
                           defaultXOffset: action.payload.defaultXOffset,
-                          defaultYOffset: action.payload.defaultYOffset}
+                          defaultYOffset: action.payload.defaultYOffset,
+                          mapLoaded: true}
       default:
         return state;
   }

@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {getMapData} from '../actions/actions';
 
-
 class MapComponent extends React.PureComponent {
 
   componentDidMount = () => {
@@ -80,35 +79,32 @@ class MapComponent extends React.PureComponent {
       }
     }
 
-    console.log(mapZoomInfo)
-
     this.props.getMapData(mapZoomInfo,defaultXOffset,defaultYOffset)
-
-    // per zoom level object, scale multiplyier (all), bounding offsets (1-3), zoom offsets(1-3)
-
-    // this.setState((state, props) => ({
-    //   imgWidth: state.imgWidth = width,
-    //   imgHeight: state.imgHeight = height,
-    //   defaultScaleArr: state.defaultScaleArr = finalScaleArr,
-    //   defaultYOffSet: state.defaultYOffSet = yOffset,
-    //   defaultXOffSet: state.defaultXOffSet = xOffset,
-    //   zoomXOffSet: state.zoomXOffSet = xOffset,
-    //   zoomYOffSet: state.zoomYOffSet = yOffset,
-    //   offsetZoomArr: state.offsetZoomArr = offsetZoomArr,
-    //   boundingOffSetArr: state.boundingOffSetArr = boundingOffSetArr,
-    //   currZoom: state.currZoom = 0
-    // }))
-
-    console.log("Handle Load Secund")
   }
 
   render(){
     return(
+      this.props.mapLoaded === false ?
       <>
         <img src={`/maps/${this.props.mapName[this.props.mapSelect]}.jpg`}
+          onLoad={this.handleLoad}
           id="mapImage"
-          alt={this.props.mapName}
-          onLoad={this.handleLoad}>
+          alt={this.props.mapName[this.props.mapSelect]}
+          style={{display: "none"}}
+          >
+        </img>
+        <p className="zoomCenter">Loading...</p>
+      </>
+      :
+      <>
+        <img src={`/maps/${this.props.mapName[this.props.mapSelect]}.jpg`}
+          onLoad={this.handleLoad}
+          id="mapImage"
+          alt={this.props.mapName[this.props.mapSelect]}
+          style={{transform: `scale(${this.props.mapZoomInfo[this.props.currZoom].zoomScale})
+                              translateX(${this.props.currZoom === 0 ? this.props.defaultXOffset : this.props.zoomXOffset}px)
+                              translateY(${this.props.currZoom === 0 ? this.props.defaultYOffset : this.props.zoomYOffset}px)`}}
+          >
         </img>
         <map name="image-map">
           <area style={{cursor: "pointer"}} alt="a" title="a" coords="947,450,922,425" shape="rect" />
@@ -121,7 +117,14 @@ class MapComponent extends React.PureComponent {
 const mapStateToProps = state => ({
   mapData: state.mapData,
   mapName: state.mapName,
-  mapSelect: state.mapSelect
+  mapSelect: state.mapSelect,
+  mapLoaded: state.mapLoaded,
+  mapZoomInfo: state.mapZoomInfo,
+  currZoom: state.currZoom,
+  defaultXOffset: state.defaultXOffset,
+  defaultYOffset: state.defaultYOffset,
+  zoomXOffset: state.zoomXOffset,
+  zoomYOffset: state.zoomYOffset
 })
 
 const mapDispatchToProps = dispatch => ({
