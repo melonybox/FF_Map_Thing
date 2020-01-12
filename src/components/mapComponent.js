@@ -1,5 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {getMapData} from '../actions/actions';
+
 
 class MapComponent extends React.PureComponent {
 
@@ -53,14 +55,14 @@ class MapComponent extends React.PureComponent {
       imgContX = imgWidth
     }
 
-    let masterScaleArr = {}
+    let mapZoomInfo = {}
     let offsetZoomArrTemp = {}
 
     for (let i = 0; i < 4; i++) {
       if (i === 0) {
-        masterScaleArr[i] = {zoomScale: defaultScale}
+        mapZoomInfo[i] = {zoomScale: defaultScale}
       } else {
-        masterScaleArr[i] = {zoomScale: (defaultScale * (((i * 25) * 0.01) + 1))}
+        mapZoomInfo[i] = {zoomScale: (defaultScale * (((i * 25) * 0.01) + 1))}
         let imgHeightCent = (imgHeight / 2)
         let imgWidthCent = (imgWidth / 2)
         let multFact = (((i  * 25) * 0.01) + 1)
@@ -69,16 +71,18 @@ class MapComponent extends React.PureComponent {
         let zoomAmountY = defaultYOffset + ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
         let zoomAmountX = defaultXOffset + ((imgWidthCent * multFact) - contWidthCent) * (contWidthCent / (contWidthCent * multFact))
         offsetZoomArrTemp[i] = {yAxis: zoomAmountY, xAxis: zoomAmountX}
-        masterScaleArr[i] = {...masterScaleArr[i], boundsYAxis: -((zoomAmountY - defaultYOffset)*2), boundsXAxis: -((zoomAmountX - defaultXOffset)*2)}
+        mapZoomInfo[i] = {...mapZoomInfo[i], boundsYAxis: -((zoomAmountY - defaultYOffset)*2), boundsXAxis: -((zoomAmountX - defaultXOffset)*2)}
         if (i === 1) {
-          masterScaleArr[i] = {...masterScaleArr[i], zoomOffsetYAxis: offsetZoomArrTemp[i].yAxis ,zoomOffsetXAxis: offsetZoomArrTemp[i].xAxis}
+          mapZoomInfo[i] = {...mapZoomInfo[i], zoomOffsetYAxis: offsetZoomArrTemp[i].yAxis ,zoomOffsetXAxis: offsetZoomArrTemp[i].xAxis}
         } else if (i > 1) {
-          masterScaleArr[i] = {...masterScaleArr[i], zoomOffsetYAxis:(offsetZoomArrTemp[i].yAxis - offsetZoomArrTemp[i - 1].yAxis) ,zoomOffseXAxis: (offsetZoomArrTemp[i].xAxis - offsetZoomArrTemp[i - 1].xAxis)}
+          mapZoomInfo[i] = {...mapZoomInfo[i], zoomOffsetYAxis:(offsetZoomArrTemp[i].yAxis - offsetZoomArrTemp[i - 1].yAxis) ,zoomOffseXAxis: (offsetZoomArrTemp[i].xAxis - offsetZoomArrTemp[i - 1].xAxis)}
         }
       }
     }
 
-    console.log(masterScaleArr)
+    console.log(mapZoomInfo)
+
+    this.props.getMapData(mapZoomInfo,defaultXOffset,defaultYOffset)
 
     // per zoom level object, scale multiplyier (all), bounding offsets (1-3), zoom offsets(1-3)
 
@@ -120,4 +124,8 @@ const mapStateToProps = state => ({
   mapSelect: state.mapSelect
 })
 
-export default connect(mapStateToProps,null)(MapComponent)
+const mapDispatchToProps = dispatch => ({
+  getMapData: (zoomMapInfo, defaultXOffSet, defaultYOffSet) => dispatch(getMapData(zoomMapInfo, defaultXOffSet, defaultYOffSet))
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(MapComponent)

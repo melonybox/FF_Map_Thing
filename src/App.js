@@ -16,7 +16,6 @@ class App extends Component {
     defaultYOffSet: 0,
     zoomXOffSet: 0,
     zoomYOffSet: 0,
-    zoomCenterAmount: 0,
     offsetZoomArr: {},
     boundingOffSetArr: {}
   }
