@@ -53,17 +53,14 @@ class MapComponent extends React.PureComponent {
       imgContX = imgWidth
     }
 
-    let masterScaleArr = []
-    let i = 0
+    let masterScaleArr = {}
     let offsetZoomArrTemp = {}
-    let offsetZoomArr = {}
-    let boundingOffSetArr = {}
 
-    for (i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       if (i === 0) {
-        masterScaleArr.push(defaultScale)
+        masterScaleArr[i] = {zoomScale: defaultScale}
       } else {
-        masterScaleArr.push(defaultScale * (((i * 25) * 0.01)+1))
+        masterScaleArr[i] = {zoomScale: (defaultScale * (((i * 25) * 0.01) + 1))}
         let imgHeightCent = (imgHeight / 2)
         let imgWidthCent = (imgWidth / 2)
         let multFact = (((i  * 25) * 0.01) + 1)
@@ -72,14 +69,18 @@ class MapComponent extends React.PureComponent {
         let zoomAmountY = defaultYOffset + ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
         let zoomAmountX = defaultXOffset + ((imgWidthCent * multFact) - contWidthCent) * (contWidthCent / (contWidthCent * multFact))
         offsetZoomArrTemp[i] = {yAxis: zoomAmountY, xAxis: zoomAmountX}
-        boundingOffSetArr[i] = {yAxis: -((zoomAmountY - defaultYOffset)*2), xAxis: -((zoomAmountX - defaultXOffset)*2)}
+        masterScaleArr[i] = {...masterScaleArr[i], boundsYAxis: -((zoomAmountY - defaultYOffset)*2), boundsXAxis: -((zoomAmountX - defaultXOffset)*2)}
         if (i === 1) {
-          offsetZoomArr[i] = {yAxis: offsetZoomArrTemp[i].yAxis ,xAxis: offsetZoomArrTemp[i].xAxis}
+          masterScaleArr[i] = {...masterScaleArr[i], zoomOffsetYAxis: offsetZoomArrTemp[i].yAxis ,zoomOffsetXAxis: offsetZoomArrTemp[i].xAxis}
         } else if (i > 1) {
-          offsetZoomArr[i] = {yAxis:(offsetZoomArrTemp[i].yAxis - offsetZoomArrTemp[i - 1].yAxis) ,xAxis: (offsetZoomArrTemp[i].xAxis - offsetZoomArrTemp[i - 1].xAxis)}
+          masterScaleArr[i] = {...masterScaleArr[i], zoomOffsetYAxis:(offsetZoomArrTemp[i].yAxis - offsetZoomArrTemp[i - 1].yAxis) ,zoomOffseXAxis: (offsetZoomArrTemp[i].xAxis - offsetZoomArrTemp[i - 1].xAxis)}
         }
       }
     }
+
+    console.log(masterScaleArr)
+
+    // per zoom level object, scale multiplyier (all), bounding offsets (1-3), zoom offsets(1-3)
 
     // this.setState((state, props) => ({
     //   imgWidth: state.imgWidth = width,
