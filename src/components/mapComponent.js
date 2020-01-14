@@ -101,25 +101,26 @@ class MapComponent extends React.PureComponent {
     let zoom = document.getElementById("mapImage")
 
     if (this.props.currZoom !== 0) {
-      if (this.state.currZoom === 1) {
-        zoom.style.transition = "0.3s"
-        this.setState((state) => ({
-          currZoom: state.currZoom = this.state.currZoom - 1,
-          zoomXOffSet: state.zoomXOffSet = this.state.defaultXOffSet,
-          zoomYOffSet: state.zoomYOffSet = this.state.defaultYOffSet
-        }))
-      } else if (this.state.currZoom > 1) {
-        zoom.style.transition = "0.3s"
-        this.setState((state) => ({
-          currZoom: state.currZoom = this.state.currZoom - 1,
-          zoomXOffSet: state.zoomXOffSet = this.state.zoomXOffSet + this.state.offsetZoomArr[this.state.currZoom + 1].xAxis,
-          zoomYOffSet: state.zoomYOffSet = this.state.zoomYOffSet + this.state.offsetZoomArr[this.state.currZoom + 1].yAxis
-        }))
+      if (this.props.currZoom === 1) {
+        zoom.style.transition = "0.2s"
+        let currZoom = this.props.currZoom - 1
+        let zoomXOffset = this.props.defaultXOffset
+        let zoomYOffset = this.props.defaultYOffset
+        this.props.getZoomOffset(currZoom,zoomXOffset,zoomYOffset)
+        setTimeout(() => {
+          zoom.style.transition = null
+        }, 200)
+      } else if (this.props.currZoom > 1) {
+        zoom.style.transition = "0.2s"
+        let currZoom = this.props.currZoom - 1
+        let zoomXOffset = this.props.zoomXOffset + this.props.mapZoomInfo[currZoom + 1].zoomOffsetXAxis
+        let zoomYOffset = this.props.zoomYOffset + this.props.mapZoomInfo[currZoom + 1].zoomOffsetYAxis
+        this.props.getZoomOffset(currZoom,zoomXOffset,zoomYOffset)
+        setTimeout(() => {
+          zoom.style.transition = null
+        }, 200)
       }
     }
-    setTimeout(() => {
-      zoom.style.transition = null
-    }, 150)
   }
 
   render(){
