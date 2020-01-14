@@ -20,6 +20,8 @@ export default function reducer(state = initialState, action) {
         return {...state, mapZoomInfo: action.payload.mapZoomInfo,
                           defaultXOffset: action.payload.defaultXOffset,
                           defaultYOffset: action.payload.defaultYOffset,
+                          zoomXOffset: action.payload.defaultXOffset,
+                          zoomYOffset: action.payload.defaultYOffset,
                           mapLoaded: true}
       case 'HANDLE_ZOOM_OFFSET':
         return {...state, currZoom: action.payload.currZoom,

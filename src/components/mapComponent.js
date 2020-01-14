@@ -65,8 +65,8 @@ class MapComponent extends React.PureComponent {
         let imgHeightCent = (imgHeight / 2)
         let imgWidthCent = (imgWidth / 2)
         let multFact = (((i  * 25) * 0.01) + 1)
-        let contHeightCent = (imgContX / 2 )
-        let contWidthCent = (imgContY / 2 )
+        let contHeightCent = (imgContY / 2 )
+        let contWidthCent = (imgContX / 2 )
         let zoomAmountY = defaultYOffset + ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
         let zoomAmountX = defaultXOffset + ((imgWidthCent * multFact) - contWidthCent) * (contWidthCent / (contWidthCent * multFact))
         offsetZoomArrTemp[i] = {yAxis: zoomAmountY, xAxis: zoomAmountX}
@@ -86,19 +86,14 @@ class MapComponent extends React.PureComponent {
     let zoom = document.getElementById("mapImage")
 
     if (this.props.currZoom !== 3) {
-      zoom.style.transition = "0.3s"
+      zoom.style.transition = "0.2s"
       let currZoom = this.props.currZoom + 1
       let zoomXOffset = this.props.zoomXOffset - this.props.mapZoomInfo[currZoom].zoomOffsetXAxis
       let zoomYOffset = this.props.zoomYOffset - this.props.mapZoomInfo[currZoom].zoomOffsetYAxis
       this.props.getZoomOffset(currZoom,zoomXOffset,zoomYOffset)
-      // this.setState((state) => ({
-      //   currZoom: state.currZoom = this.state.currZoom + 1,
-      //   zoomXOffSet: state.zoomXOffSet = this.state.zoomXOffSet - this.state.offsetZoomArr[this.state.currZoom].xAxis,
-      //   zoomYOffSet: state.zoomYOffSet = this.state.zoomYOffSet - this.state.offsetZoomArr[this.state.currZoom].yAxis
-      // }))
       setTimeout(() => {
         zoom.style.transition = null
-      }, 3000)
+      }, 200)
     }
   }
 
