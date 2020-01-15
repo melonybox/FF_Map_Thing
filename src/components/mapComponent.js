@@ -14,14 +14,14 @@ class MapComponent extends React.PureComponent {
   }
 
   handleLoad = () => {
-    let mapImage = document.getElementById("mapImage")
-    let mapCont = document.getElementById("mapCont")
-    let imgWidth = mapImage.width
-    let imgHeight = mapImage.height
-    let imgContWidth = mapCont.clientWidth
-    let imgContHeight = mapCont.clientHeight
-    let widthScale = imgContWidth / imgWidth
-    let heightScale = imgContHeight / imgHeight
+    const mapImage = document.getElementById("mapImage")
+    const mapCont = document.getElementById("mapCont")
+    const imgWidth = mapImage.width
+    const imgHeight = mapImage.height
+    const imgContWidth = mapCont.clientWidth
+    const imgContHeight = mapCont.clientHeight
+    const widthScale = imgContWidth / imgWidth
+    const heightScale = imgContHeight / imgHeight
     let defaultScale = 0
     let defaultXOffset = 0
     let defaultYOffset = 0
@@ -62,13 +62,13 @@ class MapComponent extends React.PureComponent {
         mapZoomInfo[i] = {zoomScale: defaultScale}
       } else {
         mapZoomInfo[i] = {zoomScale: (defaultScale * (((i * 25) * 0.01) + 1))}
-        let imgHeightCent = (imgHeight / 2)
-        let imgWidthCent = (imgWidth / 2)
-        let multFact = (((i  * 25) * 0.01) + 1)
-        let contHeightCent = (imgContY / 2 )
-        let contWidthCent = (imgContX / 2 )
-        let zoomAmountY = defaultYOffset + ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
-        let zoomAmountX = defaultXOffset + ((imgWidthCent * multFact) - contWidthCent) * (contWidthCent / (contWidthCent * multFact))
+        const imgHeightCent = (imgHeight / 2)
+        const imgWidthCent = (imgWidth / 2)
+        const multFact = (((i  * 25) * 0.01) + 1)
+        const contHeightCent = (imgContY / 2 )
+        const contWidthCent = (imgContX / 2 )
+        const zoomAmountY = defaultYOffset + ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
+        const zoomAmountX = defaultXOffset + ((imgWidthCent * multFact) - contWidthCent) * (contWidthCent / (contWidthCent * multFact))
         offsetZoomArrTemp[i] = {yAxis: zoomAmountY, xAxis: zoomAmountX}
         mapZoomInfo[i] = {...mapZoomInfo[i], boundsYAxis: -((zoomAmountY - defaultYOffset)*2), boundsXAxis: -((zoomAmountX - defaultXOffset)*2)}
         if (i === 1) {
@@ -83,13 +83,13 @@ class MapComponent extends React.PureComponent {
   }
 
   handleZoomIn = () => {
-    let zoom = document.getElementById("mapImage")
+    const zoom = document.getElementById("mapImage")
 
     if (this.props.currZoom !== 3) {
       zoom.style.transition = "0.2s"
-      let currZoom = this.props.currZoom + 1
-      let zoomXOffset = this.props.zoomXOffset - this.props.mapZoomInfo[currZoom].zoomOffsetXAxis
-      let zoomYOffset = this.props.zoomYOffset - this.props.mapZoomInfo[currZoom].zoomOffsetYAxis
+      const currZoom = this.props.currZoom + 1
+      const zoomXOffset = this.props.zoomXOffset - this.props.mapZoomInfo[currZoom].zoomOffsetXAxis
+      const zoomYOffset = this.props.zoomYOffset - this.props.mapZoomInfo[currZoom].zoomOffsetYAxis
       this.props.getZoomOffset(currZoom,zoomXOffset,zoomYOffset)
       setTimeout(() => {
         zoom.style.transition = null
@@ -98,23 +98,24 @@ class MapComponent extends React.PureComponent {
   }
 
   handleZoomOut = () => {
-    let zoom = document.getElementById("mapImage")
+    const zoom = document.getElementById("mapImage")
+    const currZoom = this.props.currZoom - 1
+    let zoomXOffset = 0
+    let zoomYOffset = 0
 
     if (this.props.currZoom !== 0) {
       if (this.props.currZoom === 1) {
         zoom.style.transition = "0.2s"
-        let currZoom = this.props.currZoom - 1
-        let zoomXOffset = this.props.defaultXOffset
-        let zoomYOffset = this.props.defaultYOffset
+        zoomXOffset = this.props.defaultXOffset
+        zoomYOffset = this.props.defaultYOffset
         this.props.getZoomOffset(currZoom,zoomXOffset,zoomYOffset)
         setTimeout(() => {
           zoom.style.transition = null
         }, 200)
       } else if (this.props.currZoom > 1) {
         zoom.style.transition = "0.2s"
-        let currZoom = this.props.currZoom - 1
-        let zoomXOffset = this.props.zoomXOffset + this.props.mapZoomInfo[currZoom + 1].zoomOffsetXAxis
-        let zoomYOffset = this.props.zoomYOffset + this.props.mapZoomInfo[currZoom + 1].zoomOffsetYAxis
+        zoomXOffset = this.props.zoomXOffset + this.props.mapZoomInfo[currZoom + 1].zoomOffsetXAxis
+        zoomYOffset = this.props.zoomYOffset + this.props.mapZoomInfo[currZoom + 1].zoomOffsetYAxis
         this.props.getZoomOffset(currZoom,zoomXOffset,zoomYOffset)
         setTimeout(() => {
           zoom.style.transition = null
