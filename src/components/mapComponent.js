@@ -124,6 +124,21 @@ class MapComponent extends React.PureComponent {
     }
   }
 
+  handleClickDown = (e) => {
+    e.preventDefault()
+    if (this.state.currZoom !== 0) {
+      this.setState((state) => ({
+        click: state.click = true
+      }))
+    }
+  }
+
+  handleClickUp = (e) => {
+    this.setState((state) => ({
+      click: state.click = false
+    }))
+  }
+
   render(){
     return(
       this.props.mapLoaded === false ?
@@ -146,6 +161,10 @@ class MapComponent extends React.PureComponent {
           style={{transform: `scale(${this.props.mapZoomInfo[this.props.currZoom].zoomScale})
                               translateX(${this.props.currZoom === 0 ? this.props.defaultXOffset : this.props.zoomXOffset}px)
                               translateY(${this.props.currZoom === 0 ? this.props.defaultYOffset : this.props.zoomYOffset}px)`}}
+          onPointerDown={this.handleClickDown}
+          onPointerUp={this.handleClickUp}
+          onPointerMove={this.handleMouseMove}
+          onPointerLeave={this.handleClickUp}
           >
         </img>
         <map name="image-map">
