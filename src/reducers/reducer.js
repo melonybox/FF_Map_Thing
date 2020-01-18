@@ -17,16 +17,9 @@ export default function reducer(state = initialState, action) {
       case 'HANDLE_MAP':
         return {...state, mapSelect: action.payload }
       case 'HANDLE_MAP_DATA':
-        return {...state, mapZoomInfo: action.payload.mapZoomInfo,
-                          defaultXOffset: action.payload.defaultXOffset,
-                          defaultYOffset: action.payload.defaultYOffset,
-                          zoomXOffset: action.payload.defaultXOffset,
-                          zoomYOffset: action.payload.defaultYOffset,
-                          mapLoaded: true}
+        return {...state, ...action.payload, mapLoaded: true}
       case 'HANDLE_ZOOM_OFFSET':
-        return {...state, currZoom: action.payload.currZoom,
-                          zoomXOffset: action.payload.zoomXOffset,
-                          zoomYOffset: action.payload.zoomYOffset}
+        return {...state, ...action.payload}
       case "HANDLE_POINTER_DOWN":
         return {...state, click: true}
       case "HANDLE_POINTER_UP":

@@ -15,7 +15,6 @@ css<br>
 react<br>
 react-scripts<br>
 redux<br>
-redux-thunk<br>
 
 ## How To Start
 

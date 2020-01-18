@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {getMapData,
-        getZoomOffset,
+import {handleMapData,
+        handleZoomOffset,
         handlePointerDown,
         handlePointerUp} from '../actions/actions';
 
@@ -30,7 +30,6 @@ class MapComponent extends React.PureComponent {
     let defaultYOffset = 0
     let imgContX = 0
     let imgContY = 0
-
     let scaleMult = 0
     let imgContPixel = 0
 
@@ -82,7 +81,13 @@ class MapComponent extends React.PureComponent {
       }
     }
 
-    this.props.getMapData(mapZoomInfo,defaultXOffset,defaultYOffset)
+    const data = {mapZoomInfo: mapZoomInfo,
+                  defaultXOffset: defaultXOffset,
+                  defaultYOffset: defaultYOffset,
+                  zoomXOffset: defaultXOffset,
+                  zoomYOffset: defaultYOffset}
+
+    this.props.handleMapData(data)
   }
 
   handleZoomIn = () => {
@@ -93,7 +98,10 @@ class MapComponent extends React.PureComponent {
       const currZoom = this.props.currZoom + 1
       const zoomXOffset = this.props.zoomXOffset - this.props.mapZoomInfo[currZoom].zoomOffsetXAxis
       const zoomYOffset = this.props.zoomYOffset - this.props.mapZoomInfo[currZoom].zoomOffsetYAxis
-      this.props.getZoomOffset(currZoom,zoomXOffset,zoomYOffset)
+      const data = {currZoom: currZoom,
+                    zoomXOffset: zoomXOffset,
+                    zoomYOffset: zoomYOffset}
+      this.props.handleZoomOffset(data)
       setTimeout(() => {
         zoom.style.transition = null
       }, 200)
@@ -105,13 +113,17 @@ class MapComponent extends React.PureComponent {
     const currZoom = this.props.currZoom - 1
     let zoomXOffset = 0
     let zoomYOffset = 0
+    let data = {}
 
     if (this.props.currZoom !== 0) {
       if (this.props.currZoom === 1) {
         zoom.style.transition = "0.2s"
         zoomXOffset = this.props.defaultXOffset
         zoomYOffset = this.props.defaultYOffset
-        this.props.getZoomOffset(currZoom,zoomXOffset,zoomYOffset)
+        data = {currZoom: currZoom,
+                zoomXOffset: zoomXOffset,
+                zoomYOffset: zoomYOffset}
+        this.props.handleZoomOffset(data)
         setTimeout(() => {
           zoom.style.transition = null
         }, 200)
@@ -119,7 +131,10 @@ class MapComponent extends React.PureComponent {
         zoom.style.transition = "0.2s"
         zoomXOffset = this.props.zoomXOffset + this.props.mapZoomInfo[currZoom + 1].zoomOffsetXAxis
         zoomYOffset = this.props.zoomYOffset + this.props.mapZoomInfo[currZoom + 1].zoomOffsetYAxis
-        this.props.getZoomOffset(currZoom,zoomXOffset,zoomYOffset)
+        data = {currZoom: currZoom,
+                zoomXOffset: zoomXOffset,
+                zoomYOffset: zoomYOffset}
+        this.props.handleZoomOffset(data)
         setTimeout(() => {
           zoom.style.transition = null
         }, 200)
@@ -198,8 +213,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getMapData: (zoomMapInfo, defaultXOffSet, defaultYOffSet) => dispatch(getMapData(zoomMapInfo, defaultXOffSet, defaultYOffSet)),
-  getZoomOffset: (currZoom, zoomXOffset, zoomYOffset) => dispatch(getZoomOffset(currZoom, zoomXOffset, zoomYOffset)),
+  handleMapData: (data) => dispatch(handleMapData(data)),
+  handleZoomOffset: (data) => dispatch(handleZoomOffset(data)),
   handlePointerDown: () => dispatch(handlePointerDown()),
   handlePointerUp: () => dispatch(handlePointerUp())
 })
