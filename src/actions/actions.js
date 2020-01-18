@@ -34,3 +34,11 @@ export const handleZoomOffset = data => ({
     type: 'HANDLE_ZOOM_OFFSET',
     payload: data
 })
+
+export const handlePointerDown = () => ({
+  type: "HANDLE_POINTER_DOWN"
+})
+
+export const handlePointerUp = () => ({
+  type: "HANDLE_POINTER_UP"
+})

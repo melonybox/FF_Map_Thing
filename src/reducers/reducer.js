@@ -27,6 +27,10 @@ export default function reducer(state = initialState, action) {
         return {...state, currZoom: action.payload.currZoom,
                           zoomXOffset: action.payload.zoomXOffset,
                           zoomYOffset: action.payload.zoomYOffset}
+      case "HANDLE_POINTER_DOWN":
+        return {...state, click: true}
+      case "HANDLE_POINTER_UP":
+        return {...state, click: false}
       default:
         return state;
   }

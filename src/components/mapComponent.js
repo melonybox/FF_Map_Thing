@@ -1,6 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {getMapData,getZoomOffset} from '../actions/actions';
+import {getMapData,
+        getZoomOffset,
+        handlePointerDown,
+        handlePointerUp} from '../actions/actions';
 
 class MapComponent extends React.PureComponent {
 
@@ -124,19 +127,19 @@ class MapComponent extends React.PureComponent {
     }
   }
 
-  handleClickDown = (e) => {
+  handlePointerDown = (e) => {
     e.preventDefault()
-    if (this.state.currZoom !== 0) {
-      this.setState((state) => ({
-        click: state.click = true
-      }))
+    if (this.props.currZoom !== 0) {
+      console.log("hi")
+      this.props.handlePointerDown()
     }
   }
 
-  handleClickUp = (e) => {
-    this.setState((state) => ({
-      click: state.click = false
-    }))
+  handlePointerUp = (e) => {
+    if (this.props.currZoom !== 0 && this.props.click === true) {
+      console.log("bye")
+      this.props.handlePointerUp()
+    }
   }
 
   render(){
@@ -161,10 +164,11 @@ class MapComponent extends React.PureComponent {
           style={{transform: `scale(${this.props.mapZoomInfo[this.props.currZoom].zoomScale})
                               translateX(${this.props.currZoom === 0 ? this.props.defaultXOffset : this.props.zoomXOffset}px)
                               translateY(${this.props.currZoom === 0 ? this.props.defaultYOffset : this.props.zoomYOffset}px)`}}
-          onPointerDown={this.handleClickDown}
-          onPointerUp={this.handleClickUp}
-          onPointerMove={this.handleMouseMove}
-          onPointerLeave={this.handleClickUp}
+          onPointerDown={this.handlePointerDown}
+          onPointerUp={this.handlePointerUp}
+          onPointerLeave={this.handlePointerUp}
+          // onPointerMove={this.handleMouseMove}
+
           >
         </img>
         <map name="image-map">
@@ -185,6 +189,7 @@ const mapStateToProps = state => ({
   mapSelect: state.mapSelect,
   mapLoaded: state.mapLoaded,
   mapZoomInfo: state.mapZoomInfo,
+  click: state.click,
   currZoom: state.currZoom,
   defaultXOffset: state.defaultXOffset,
   defaultYOffset: state.defaultYOffset,
@@ -194,7 +199,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getMapData: (zoomMapInfo, defaultXOffSet, defaultYOffSet) => dispatch(getMapData(zoomMapInfo, defaultXOffSet, defaultYOffSet)),
-  getZoomOffset: (currZoom, zoomXOffset, zoomYOffset) => dispatch(getZoomOffset(currZoom, zoomXOffset, zoomYOffset))
+  getZoomOffset: (currZoom, zoomXOffset, zoomYOffset) => dispatch(getZoomOffset(currZoom, zoomXOffset, zoomYOffset)),
+  handlePointerDown: () => dispatch(handlePointerDown()),
+  handlePointerUp: () => dispatch(handlePointerUp())
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(MapComponent)
