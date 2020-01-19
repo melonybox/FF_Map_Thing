@@ -64,10 +64,10 @@ class MapComponent extends React.PureComponent {
       if (i === 0) {
         mapZoomInfo[i] = {zoomScale: defaultScale}
       } else {
-        mapZoomInfo[i] = {zoomScale: (defaultScale * (((i * 25) * 0.01) + 1))}
+        mapZoomInfo[i] = {zoomScale: (defaultScale * (((i * 33) * 0.01) + 1))}
         const imgHeightCent = (imgHeight / 2)
         const imgWidthCent = (imgWidth / 2)
-        const multFact = (((i  * 25) * 0.01) + 1)
+        const multFact = (((i  * 33) * 0.01) + 1)
         const contHeightCent = (imgContY / 2 )
         const contWidthCent = (imgContX / 2 )
         const zoomAmountY = defaultYOffset + ((imgHeightCent * multFact) - contHeightCent) * (contHeightCent / (contHeightCent * multFact))
@@ -224,7 +224,7 @@ class MapComponent extends React.PureComponent {
           useMap="#image-map"
           onMouseDown={this.handleMouseDown}
           onMouseUp={this.handleMouseUp}
-          onMouseLeave={this.handleMouseLeave}
+          onMouseLeave={this.handleMouseUp}
           onMouseMove={this.handleMouseMove}
           >
         </img>
