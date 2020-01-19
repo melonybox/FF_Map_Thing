@@ -2,8 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {handleMapData,
         handleZoomOffset,
-        handlePointerDown,
-        handlePointerUp} from '../actions/actions';
+        handleMouseDown,
+        handleMouseUp,
+        handleMouseMove} from '../actions/actions';
 
 class MapComponent extends React.PureComponent {
 
@@ -142,20 +143,53 @@ class MapComponent extends React.PureComponent {
     }
   }
 
-  handlePointerDown = (e) => {
+  handleMouseDown = (e) => {
     e.preventDefault()
     if (this.props.currZoom !== 0) {
-      console.log("hi")
-      this.props.handlePointerDown()
+      this.props.handleMouseDown()
     }
   }
 
-  handlePointerUp = (e) => {
+  handleMouseUp = (e) => {
     if (this.props.currZoom !== 0 && this.props.click === true) {
-      console.log("bye")
-      this.props.handlePointerUp()
+      this.props.handleMouseUp()
     }
   }
+
+  handleMouseMove = (e) => {
+    if (this.props.click === true) {
+      let data = {}
+      let newXTrim = this.props.zoomXOffset + (e.movementX/this.props.mapZoomInfo[this.props.currZoom].zoomScale)
+      let newYTrim = this.props.zoomYOffset + (e.movementY/this.props.mapZoomInfo[this.props.currZoom].zoomScale)
+
+      if (this.props.mapZoomInfo[this.props.currZoom].boundsYAxis < 0) {
+        if (newYTrim > 0 || newYTrim < this.props.mapZoomInfo[this.props.currZoom].boundsYAxis) {
+          newYTrim = (newYTrim > 0) ? 0 : this.props.mapZoomInfo[this.props.currZoom].boundsYAxis
+        }
+      } else {
+        if (newYTrim < 0 || newYTrim > this.props.mapZoomInfo[this.props.currZoom].boundsYAxis) {
+          newYTrim = (newYTrim < 0) ? 0 : this.props.mapZoomInfo[this.props.currZoom].boundsYAxis
+        }
+      }
+
+      if (this.props.mapZoomInfo[this.props.currZoom].boundsXAxis < 0) {
+        if (newXTrim > 0 || newXTrim < this.props.mapZoomInfo[this.props.currZoom].boundsXAxis) {
+          newXTrim = (newXTrim > 0) ? 0 : this.props.mapZoomInfo[this.props.currZoom].boundsXAxis
+        }
+      } else {
+        if (newXTrim < 0 || newXTrim > this.props.mapZoomInfo[this.props.currZoom].boundsXAxis) {
+          newXTrim = (newXTrim < 0) ? 0 : this.props.mapZoomInfo[this.props.currZoom].boundsXAxis
+        }
+      }
+
+      data = {zoomXOffset: newXTrim,
+              zoomYOffset: newYTrim}
+
+      this.props.handleMouseMove(data)
+    }
+  }
+
+  //css pointer-events: none to disable interaction of the mouse with buttons
 
   render(){
     return(
@@ -179,19 +213,19 @@ class MapComponent extends React.PureComponent {
           style={{transform: `scale(${this.props.mapZoomInfo[this.props.currZoom].zoomScale})
                               translateX(${this.props.currZoom === 0 ? this.props.defaultXOffset : this.props.zoomXOffset}px)
                               translateY(${this.props.currZoom === 0 ? this.props.defaultYOffset : this.props.zoomYOffset}px)`}}
-          onPointerDown={this.handlePointerDown}
-          onPointerUp={this.handlePointerUp}
-          onPointerLeave={this.handlePointerUp}
-          // onPointerMove={this.handleMouseMove}
-
+          useMap="#image-map"
+          onMouseDown={this.handleMouseDown}
+          onMouseUp={this.handleMouseUp}
+          onMouseLeave={this.handleMouseLeave}
+          onMouseMove={this.handleMouseMove}
           >
         </img>
         <map name="image-map">
           <area style={{cursor: "pointer"}} alt="a" title="a" coords="947,450,922,425" shape="rect" />
         </map>
-        <div className="zoomButtons">
-          <p style={{cursor: "pointer"}} onClick={this.handleZoomIn} > Increase </p>
-          <p style={{cursor: "pointer"}} onClick={this.handleZoomOut} > Decrease </p>
+        <div className="zoomButtons" style={{pointerEvents: `${!!this.props.click ? "none" : "auto"}`}}>
+          <p style={{cursor: "pointer"}} onPointerDown={this.handleZoomIn} > Increase </p>
+          <p style={{cursor: "pointer"}} onPointerDown={this.handleZoomOut} > Decrease </p>
         </div>
       </>
     )
@@ -215,8 +249,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   handleMapData: (data) => dispatch(handleMapData(data)),
   handleZoomOffset: (data) => dispatch(handleZoomOffset(data)),
-  handlePointerDown: () => dispatch(handlePointerDown()),
-  handlePointerUp: () => dispatch(handlePointerUp())
+  handleMouseDown: () => dispatch(handleMouseDown()),
+  handleMouseUp: () => dispatch(handleMouseUp()),
+  handleMouseMove: (data) => dispatch(handleMouseMove(data))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(MapComponent)

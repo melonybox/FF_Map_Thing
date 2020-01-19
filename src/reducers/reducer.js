@@ -20,10 +20,12 @@ export default function reducer(state = initialState, action) {
         return {...state, ...action.payload, mapLoaded: true}
       case 'HANDLE_ZOOM_OFFSET':
         return {...state, ...action.payload}
-      case "HANDLE_POINTER_DOWN":
+      case "HANDLE_MOUSE_DOWN":
         return {...state, click: true}
-      case "HANDLE_POINTER_UP":
+      case "HANDLE_MOUSE_UP":
         return {...state, click: false}
+      case "HANDLE_MOUSE_MOVE":
+        return {...state, ...action.payload}
       default:
         return state;
   }
