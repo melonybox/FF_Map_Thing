@@ -17,7 +17,7 @@ class MapComponent extends React.PureComponent {
     window.removeEventListener('resize', this.handeLoad);
   }
 
-  handleLoad = () => {
+  handleLoad = (e) => {
     const mapImage = document.getElementById("mapImage")
     const mapCont = document.getElementById("mapCont")
     const imgWidth = mapImage.width
@@ -82,11 +82,19 @@ class MapComponent extends React.PureComponent {
       }
     }
 
-    const data = {mapZoomInfo: mapZoomInfo,
-                  defaultXOffset: defaultXOffset,
-                  defaultYOffset: defaultYOffset,
-                  zoomXOffset: defaultXOffset,
-                  zoomYOffset: defaultYOffset}
+    let data = {}
+
+    if (e.type === "load") {
+      data = {mapZoomInfo: mapZoomInfo,
+              defaultXOffset: defaultXOffset,
+              defaultYOffset: defaultYOffset,
+              zoomXOffset: defaultXOffset,
+              zoomYOffset: defaultYOffset}
+    } else {
+      data = {mapZoomInfo: mapZoomInfo,
+              defaultXOffset: defaultXOffset,
+              defaultYOffset: defaultYOffset}
+    }
 
     this.props.handleMapData(data)
   }
