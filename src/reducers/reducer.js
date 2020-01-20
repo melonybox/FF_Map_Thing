@@ -1,6 +1,6 @@
 const initialState = {
   mapData: "Hello World!",
-  mapName: ["Lakeland_-_Tyger","Kholusia_-_Forgiven_Pedantry"],
+  mapName: ["Amh_Araeng_-_Tarchia","Il_Mheg_-_Aglaope"],
   mapSelect: 0,
   mapZoomInfo: {},
   mapLoaded: false,

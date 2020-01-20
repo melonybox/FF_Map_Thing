@@ -14,12 +14,12 @@ class App extends Component {
       return (
         <div className="centerColumn">
           <div className="centerColumn navBar">
-          <p className="titleText">
-            {this.props.mapData}
-          </p>
-          <p className="navText" onClick={this.handleMap}>
-            Lakeland - Tyger | Next | This | That
-          </p>
+            <h1 className="titleText">
+              {this.props.mapData}
+            </h1>
+            <p className="navText" onClick={this.handleMap}>
+              Lakeland - Tyger | Next | This | That
+            </p>
           </div>
           <MapBox />
         </div>

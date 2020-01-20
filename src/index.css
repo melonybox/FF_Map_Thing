@@ -28,19 +28,19 @@ code {
 
 .navBar {
   height: 15vh;
-  line-height: calc(1.5rem + 0.5vw);
-  line-height: calc(1.5vw + 1.5vh + .5vmin);
+  line-height: calc(1em + 1vmin);
 }
 
 .titleText {
-  font-size: calc(2vw + 2vh + .5vmin);
-  letter-spacing: calc((2vw + 2vh + .5vmin) * .01);
+  font-size: calc(1.5em + 1vmin);
+  letter-spacing: calc((1.5rem + 1vmin) * 0.01);
+  font-weight: normal;
   margin: 0;
 }
 
 .navText {
-  font-size: calc(1vw + 1vh + .5vmin);
-  letter-spacing: calc((1vw + 1vh + .5vmin) * .01);
+  font-size: calc(0.5em + 1vmin);
+  letter-spacing: calc((0.5rem + 1vmin) * 0.01);
   margin: 0;
 }
 
