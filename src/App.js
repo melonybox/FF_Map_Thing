@@ -7,7 +7,7 @@ import MapBox from './containers/mapBox.js'
 class App extends Component {
 
   handleMap = (page) => {
-    this.props.handleMap(1)
+    this.props.handleMap(page)
   }
 
   render() {
@@ -17,9 +17,10 @@ class App extends Component {
             <h1 className="titleText">
               {this.props.mapData}
             </h1>
-            <p className="navText" onClick={this.handleMap}>
-              Lakeland - Tyger | Next | This | That
-            </p>
+            <div>
+              <button className="navText" type="button" onClick={() => this.handleMap(0)}>Tarchia</button>
+              <button className="navText" type="button" onClick={() => this.handleMap(1)}>Aglaope</button>
+            </div>
           </div>
           <MapBox />
         </div>
