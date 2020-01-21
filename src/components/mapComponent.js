@@ -203,10 +203,10 @@ class MapComponent extends React.PureComponent {
     return(
       this.props.mapLoaded === false ?
       <>
-        <img src={`/maps/${this.props.mapName[this.props.mapSelect]}.jpg`}
+        <img src={`/maps/${this.props.mapNames[this.props.mapSelect]}.jpg`}
           onLoad={this.handleLoad}
           id="mapImage"
-          alt={this.props.mapName[this.props.mapSelect]}
+          alt={this.props.mapNames[this.props.mapSelect]}
           style={{display: "none"}}
           >
         </img>
@@ -214,10 +214,10 @@ class MapComponent extends React.PureComponent {
       </>
       :
       <>
-        <img src={`/maps/${this.props.mapName[this.props.mapSelect]}.jpg`}
+        <img src={`/maps/${this.props.mapNames[this.props.mapSelect]}.jpg`}
           onLoad={this.handleLoad}
           id="mapImage"
-          alt={this.props.mapName[this.props.mapSelect]}
+          alt={this.props.mapNames[this.props.mapSelect]}
           style={{transform: `scale(${this.props.mapZoomInfo[this.props.currZoom].zoomScale})
                               translateX(${this.props.currZoom === 0 ? this.props.defaultXOffset : this.props.zoomXOffset}px)
                               translateY(${this.props.currZoom === 0 ? this.props.defaultYOffset : this.props.zoomYOffset}px)`}}
@@ -242,7 +242,7 @@ class MapComponent extends React.PureComponent {
 
 const mapStateToProps = state => ({
   mapData: state.mapData,
-  mapName: state.mapName,
+  mapNames: state.mapNames,
   mapSelect: state.mapSelect,
   mapLoaded: state.mapLoaded,
   mapZoomInfo: state.mapZoomInfo,

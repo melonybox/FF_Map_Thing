@@ -28,11 +28,11 @@ code {
 
 .navBar {
   height: 15vh;
-  line-height: calc(1em + 1vmin);
+  line-height: calc(1.5em + 1vmin);
 }
 
 .titleText {
-  font-size: calc(1.5em + 1vmin);
+  font-size: calc(1 .5em + 1vmin);
   letter-spacing: calc((1.5rem + 1vmin) * 0.01);
   font-weight: normal;
   margin: 0;
@@ -42,7 +42,7 @@ code {
   font-size: calc(0.5em + 1vmin);
   letter-spacing: calc((0.5rem + 1vmin) * 0.01);
   margin: 0;
-  padding: 2px;
+  padding: 0 calc((0.75rem + 1vmin) * 0.2) 0;
   background: none;
   border: none;
   outline: none;

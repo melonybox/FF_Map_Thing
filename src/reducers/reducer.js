@@ -1,6 +1,6 @@
 const initialState = {
   mapData: "Hello World!",
-  mapName: ["Amh_Araeng_-_Tarchia","Il_Mheg_-_Aglaope"],
+  mapNames: [],
   mapSelect: 0,
   mapZoomInfo: {},
   mapLoaded: false,
@@ -9,7 +9,7 @@ const initialState = {
   defaultXOffset: 0,
   defaultYOffset: 0,
   zoomXOffset: 0,
-  zoomYOffset: 0,
+  zoomYOffset: 0
 }
 
 export default function reducer(state = initialState, action) {
@@ -25,6 +25,8 @@ export default function reducer(state = initialState, action) {
       case "HANDLE_MOUSE_UP":
         return {...state, click: false}
       case "HANDLE_MOUSE_MOVE":
+        return {...state, ...action.payload}
+      case "HANDLE_MAP_NAMES":
         return {...state, ...action.payload}
       default:
         return state;

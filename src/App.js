@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {handleMap} from './actions/actions.js';
+import {handleMap,getMapNamesFetch} from './actions/actions.js';
 import MapBox from './containers/mapBox.js'
 
 
 class App extends Component {
+
+  componentDidMount = () => {
+    this.props.getMapNamesFetch()
+  }
 
   handleMap = (page) => {
     this.props.handleMap(page)
@@ -12,6 +16,9 @@ class App extends Component {
 
   render() {
       return (
+        this.props.mapNames.length === 0 ?
+        <p className="zoomCenter">Loading...</p>
+        :
         <div className="centerColumn">
           <div className="centerColumn navBar">
             <h1 className="titleText">
@@ -30,12 +37,13 @@ class App extends Component {
 
   const mapStateToProps = state => ({
     mapData: state.mapData,
-    mapName: state.mapName,
+    mapNames: state.mapNames,
     mapSelect: state.mapSelect
   })
 
   const mapDispatchToProps = dispatch => ({
-    handleMap: (page) => dispatch(handleMap(page))
+    handleMap: (page) => dispatch(handleMap(page)),
+    getMapNamesFetch: () => dispatch(getMapNamesFetch())
   })
 
 export default connect(mapStateToProps,mapDispatchToProps)(App);

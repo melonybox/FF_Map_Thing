@@ -1,3 +1,18 @@
+export const getMapNamesFetch = () => {
+  return dispatch => {
+    return fetch("/json/maps.json")
+      .then(resp => resp.json())
+      .then(data => {
+        if (data.errors) {
+          alert(data.errors)
+        } else {
+          dispatch(handleMapNames(data))
+        }
+    })
+  }
+}
+
+
 export const handleMap = data => ({
   type: 'HANDLE_MAP',
   payload: data
@@ -23,5 +38,10 @@ export const handleMouseUp = () => ({
 
 export const handleMouseMove = data => ({
   type: "HANDLE_MOUSE_MOVE",
+  payload: data
+})
+
+export const handleMapNames = data => ({
+  type: "HANDLE_MAP_NAMES",
   payload: data
 })
