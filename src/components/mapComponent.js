@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {handleMapData,
         handleZoomOffset,
         handleMouseDown,
         handleMouseUp,
         handleMouseMove} from '../actions/actions';
+import MapArea from '../components/mapArea.js'
 
-class MapComponent extends React.PureComponent {
+class MapComponent extends Component {
 
   componentDidMount = () => {
     console.log("Resize Run")
@@ -229,7 +230,22 @@ class MapComponent extends React.PureComponent {
           >
         </img>
         <map name="image-map">
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="947,450,922,425" shape="rect" />
+          <MapArea titleName="b" areaCoords="785,462, 16"/>
+          {/* <area style={{cursor: "pointer"}} alt="a" title="a" coords="785,462, 16" shape="circle" /> */}
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="463,547, 16" shape="circle" />
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="918,757, 16" shape="circle" />
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="528,924, 16" shape="circle" />
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="765,1151, 16" shape="circle" />
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="910,1194, 16" shape="circle" />
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="808,1531, 16" shape="circle" />
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1380,564, 16" shape="circle" />
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1497,637, 16" shape="circle" />
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1390,962, 16" shape="circle" />
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1627,1026, 16" shape="circle" />
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1375,1249, 16" shape="circle" />
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="945,1771, 16" shape="circle" />
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1470,1711, 16" shape="circle" />
+          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1599,1643, 16" shape="circle" />
         </map>
         <div className="zoomButtons" style={{pointerEvents: `${!!this.props.click ? "none" : "auto"}`}}>
           <p style={{cursor: "pointer"}} onPointerDown={this.handleZoomIn} > Increase </p>
