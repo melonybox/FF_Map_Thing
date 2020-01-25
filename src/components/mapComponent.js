@@ -230,23 +230,18 @@ class MapComponent extends Component {
           >
         </img>
         <map name="image-map">
-          <MapArea titleName="b" areaCoords="785,462, 16"/>
-          {/* <area style={{cursor: "pointer"}} alt="a" title="a" coords="785,462, 16" shape="circle" /> */}
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="463,547, 16" shape="circle" />
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="918,757, 16" shape="circle" />
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="528,924, 16" shape="circle" />
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="765,1151, 16" shape="circle" />
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="910,1194, 16" shape="circle" />
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="808,1531, 16" shape="circle" />
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1380,564, 16" shape="circle" />
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1497,637, 16" shape="circle" />
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1390,962, 16" shape="circle" />
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1627,1026, 16" shape="circle" />
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1375,1249, 16" shape="circle" />
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="945,1771, 16" shape="circle" />
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1470,1711, 16" shape="circle" />
-          <area style={{cursor: "pointer"}} alt="a" title="a" coords="1599,1643, 16" shape="circle" />
+          {this.props.mapCoords.map((item,idx) => {
+            return <MapArea key={idx} pointName={item.pointName} areaCoords={item.areaCoords} />
+          })}
         </map>
+        <svg className="zoomSvg" style={{width: "2048px",
+                                         height: "2048px",
+                                         pointerEvents: "none",
+                                         transform: `scale(${this.props.mapZoomInfo[this.props.currZoom].zoomScale})
+                                                     translateX(-116%)
+                                                     translateY(-116%)`}}>
+          <circle cx="434" cy="258" r="20" style={{fill: "rgb(102,102,102)", stroke: "rgb(51,51,51)", strokeWidth: "1", opacity: "1"}} />
+        </svg>
         <div className="zoomButtons" style={{pointerEvents: `${!!this.props.click ? "none" : "auto"}`}}>
           <p style={{cursor: "pointer"}} onPointerDown={this.handleZoomIn} > Increase </p>
           <p style={{cursor: "pointer"}} onPointerDown={this.handleZoomOut} > Decrease </p>
@@ -259,6 +254,7 @@ class MapComponent extends Component {
 const mapStateToProps = state => ({
   mapData: state.mapData,
   mapNames: state.mapNames,
+  mapCoords: state.mapCoords,
   mapSelect: state.mapSelect,
   mapLoaded: state.mapLoaded,
   mapZoomInfo: state.mapZoomInfo,
