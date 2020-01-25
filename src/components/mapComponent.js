@@ -238,9 +238,9 @@ class MapComponent extends Component {
                                          height: "2048px",
                                          pointerEvents: "none",
                                          transform: `scale(${this.props.mapZoomInfo[this.props.currZoom].zoomScale})
-                                                     translateX(-116%)
-                                                     translateY(-116%)`}}>
-          <circle cx="434" cy="258" r="20" style={{fill: "rgb(102,102,102)", stroke: "rgb(51,51,51)", strokeWidth: "1", opacity: "1"}} />
+                                                     translateX(${(1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50}%)
+                                                     translateY(${(1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50}%)`}}>
+          <circle cx="785" cy="462" r="20" style={{fill: "rgb(102,102,102)", stroke: "rgb(51,51,51)", strokeWidth: "1", opacity: "1"}} />
         </svg>
         <div className="zoomButtons" style={{pointerEvents: `${!!this.props.click ? "none" : "auto"}`}}>
           <p style={{cursor: "pointer"}} onPointerDown={this.handleZoomIn} > Increase </p>

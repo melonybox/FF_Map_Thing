@@ -63,8 +63,8 @@ code {
 
 .zoomSvg {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
 }
 
 .zoomCenter {
