@@ -191,8 +191,20 @@ class MapComponent extends Component {
         }
       }
 
+
+      let percentScaleY = (this.props.mapZoomInfo[this.props.currZoom].boundsYAxis /2 )
+      let trimY = newYTrim - percentScaleY
+      let gbg = trimY/percentScaleY
+      let fd = 0
+
+      if (newYTrim < this.props.mapZoomInfo[this.props.currZoom].boundsYAxis/2){
+        console.log(trimY*(1/this.props.mapZoomInfo[this.props.currZoom].zoomScale),gbg)
+        fd = (gbg * (this.props.mapZoomInfo[this.props.currZoom].zoomScale + 1)*10)
+      }
+
       data = {zoomXOffset: newXTrim,
-              zoomYOffset: newYTrim}
+              zoomYOffset: newYTrim,
+              svgYOffset: fd}
 
       this.props.handleMouseMove(data)
     }
@@ -238,9 +250,16 @@ class MapComponent extends Component {
                                          height: "2048px",
                                          pointerEvents: "none",
                                          transform: `scale(${this.props.mapZoomInfo[this.props.currZoom].zoomScale})
-                                                     translateX(${(1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50}%)
-                                                     translateY(${(1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50}%)`}}>
+                                                     translateX(${this.props.currZoom === 0 ?
+                                                                  (1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50
+                                                                  :
+                                                                  ((1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50)}%)
+                                                     translateY(${this.props.currZoom === 0 ?
+                                                                  (1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50
+                                                                  :
+                                                                  ((1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50) - this.props.svgYOffset}%)`}}>
           <circle cx="785" cy="462" r="20" style={{fill: "rgb(102,102,102)", stroke: "rgb(51,51,51)", strokeWidth: "1", opacity: "1"}} />
+          <circle cx="463" cy="547" r="20" style={{fill: "rgb(102,102,102)", stroke: "rgb(51,51,51)", strokeWidth: "1", opacity: "1"}} />
         </svg>
         <div className="zoomButtons" style={{pointerEvents: `${!!this.props.click ? "none" : "auto"}`}}>
           <p style={{cursor: "pointer"}} onPointerDown={this.handleZoomIn} > Increase </p>
@@ -263,7 +282,8 @@ const mapStateToProps = state => ({
   defaultXOffset: state.defaultXOffset,
   defaultYOffset: state.defaultYOffset,
   zoomXOffset: state.zoomXOffset,
-  zoomYOffset: state.zoomYOffset
+  zoomYOffset: state.zoomYOffset,
+  svgYOffset: state.svgYOffset
 })
 
 const mapDispatchToProps = dispatch => ({
