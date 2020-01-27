@@ -192,14 +192,15 @@ class MapComponent extends Component {
       }
 
 
-      let percentScaleY = (this.props.mapZoomInfo[this.props.currZoom].boundsYAxis /2 )
+      let percentScaleY = (this.props.mapZoomInfo[this.props.currZoom].boundsYAxis/2)
+      let aaa = (1 - (document.getElementById("mapCont").clientHeight / (document.getElementById("mapImage").height * this.props.mapZoomInfo[this.props.currZoom].zoomScale))) / 2
       let trimY = newYTrim - percentScaleY
       let gbg = trimY/percentScaleY
       let fd = 0
 
       if (newYTrim < this.props.mapZoomInfo[this.props.currZoom].boundsYAxis/2){
-        console.log(trimY*(1/this.props.mapZoomInfo[this.props.currZoom].zoomScale),gbg)
-        fd = (gbg * (this.props.mapZoomInfo[this.props.currZoom].zoomScale + 1)*10)
+        fd = (aaa*gbg) * 100
+        console.log(aaa*gbg)
       }
 
       data = {zoomXOffset: newXTrim,
