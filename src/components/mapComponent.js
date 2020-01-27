@@ -192,20 +192,22 @@ class MapComponent extends Component {
       }
 
 
-      let percentScaleY = (this.props.mapZoomInfo[this.props.currZoom].boundsYAxis/2)
-      let aaa = (1 - (document.getElementById("mapCont").clientHeight / (document.getElementById("mapImage").height * this.props.mapZoomInfo[this.props.currZoom].zoomScale))) / 2
+      const percentScaleY = (this.props.mapZoomInfo[this.props.currZoom].boundsYAxis/2)
+      const yAxisRange = (1 - (document.getElementById("mapCont").clientHeight / (document.getElementById("mapImage").height * this.props.mapZoomInfo[this.props.currZoom].zoomScale))) / 2
       let trimY = newYTrim - percentScaleY
-      let gbg = trimY/percentScaleY
-      let fd = 0
+      let yAxisPercent = trimY/percentScaleY
+      let svgYOffset = (yAxisRange*yAxisPercent) * 100
 
-      if (newYTrim < this.props.mapZoomInfo[this.props.currZoom].boundsYAxis/2){
-        fd = (aaa*gbg) * 100
-        console.log(aaa*gbg)
-      }
+      const percentScaleX = (this.props.mapZoomInfo[this.props.currZoom].boundsXAxis/2)
+      const xAxisRange = (1 - (document.getElementById("mapCont").clientWidth / (document.getElementById("mapImage").width * this.props.mapZoomInfo[this.props.currZoom].zoomScale))) / 2
+      let trimX = newXTrim - percentScaleX
+      let xAxisPercent = trimX/percentScaleX
+      let svgXOffset = (xAxisRange*xAxisPercent) * 100
 
       data = {zoomXOffset: newXTrim,
               zoomYOffset: newYTrim,
-              svgYOffset: fd}
+              svgYOffset: svgYOffset,
+              svgXOffset: svgXOffset}
 
       this.props.handleMouseMove(data)
     }
@@ -254,7 +256,7 @@ class MapComponent extends Component {
                                                      translateX(${this.props.currZoom === 0 ?
                                                                   (1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50
                                                                   :
-                                                                  ((1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50)}%)
+                                                                  ((1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50) - this.props.svgXOffset}%)
                                                      translateY(${this.props.currZoom === 0 ?
                                                                   (1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50
                                                                   :
@@ -284,7 +286,8 @@ const mapStateToProps = state => ({
   defaultYOffset: state.defaultYOffset,
   zoomXOffset: state.zoomXOffset,
   zoomYOffset: state.zoomYOffset,
-  svgYOffset: state.svgYOffset
+  svgYOffset: state.svgYOffset,
+  svgXOffset: state.svgXOffset
 })
 
 const mapDispatchToProps = dispatch => ({

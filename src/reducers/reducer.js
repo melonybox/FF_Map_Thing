@@ -27,7 +27,8 @@ const initialState = {
   defaultYOffset: 0,
   zoomXOffset: 0,
   zoomYOffset: 0,
-  svgYOffset: 0
+  svgYOffset: 0,
+  svgXOffset: 0
 }
 
 export default function reducer(state = initialState, action) {
