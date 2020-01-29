@@ -67,10 +67,6 @@ code {
   left: 50%;
 }
 
-.svgItems {
-  transition: 0.2s
-}
-
 .zoomCenter {
   position: absolute;
   top: 50%;
