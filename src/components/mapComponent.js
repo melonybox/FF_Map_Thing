@@ -101,10 +101,12 @@ class MapComponent extends Component {
   }
 
   handleZoomIn = () => {
-    const zoom = document.getElementById("mapImage")
+    const zoomImage = document.getElementById("mapImage")
+    const zoomSvg = document.getElementById("zoomSvg")
 
     if (this.props.currZoom !== 3) {
-      zoom.style.transition = "0.2s"
+      zoomImage.style.transition = "0.2s"
+      zoomSvg.style.transition = "0.2s"
       const currZoom = this.props.currZoom + 1
       const zoomXOffset = this.props.zoomXOffset - this.props.mapZoomInfo[currZoom].zoomOffsetXAxis
       const zoomYOffset = this.props.zoomYOffset - this.props.mapZoomInfo[currZoom].zoomOffsetYAxis
@@ -113,13 +115,15 @@ class MapComponent extends Component {
                     zoomYOffset: zoomYOffset}
       this.props.handleZoomOffset(data)
       setTimeout(() => {
-        zoom.style.transition = null
+        zoomImage.style.transition = null
+        zoomSvg.style.transition = null
       }, 200)
     }
   }
 
   handleZoomOut = () => {
-    const zoom = document.getElementById("mapImage")
+    const zoomImage = document.getElementById("mapImage")
+    const zoomSvg = document.getElementById("zoomSvg")
     const currZoom = this.props.currZoom - 1
     let zoomXOffset = 0
     let zoomYOffset = 0
@@ -127,18 +131,23 @@ class MapComponent extends Component {
 
     if (this.props.currZoom !== 0) {
       if (this.props.currZoom === 1) {
-        zoom.style.transition = "0.2s"
+        zoomImage.style.transition = "0.2s"
+        zoomSvg.style.transition = "0.2s"
         zoomXOffset = this.props.defaultXOffset
         zoomYOffset = this.props.defaultYOffset
         data = {currZoom: currZoom,
                 zoomXOffset: zoomXOffset,
-                zoomYOffset: zoomYOffset}
+                zoomYOffset: zoomYOffset,
+                svgYOffset: 0,
+                svgXOffset: 0}
         this.props.handleZoomOffset(data)
         setTimeout(() => {
-          zoom.style.transition = null
+          zoomImage.style.transition = null
+          zoomSvg.style.transition = null
         }, 200)
       } else if (this.props.currZoom > 1) {
-        zoom.style.transition = "0.2s"
+        zoomImage.style.transition = "0.2s"
+        zoomSvg.style.transition = "0.2s"
         zoomXOffset = this.props.zoomXOffset + this.props.mapZoomInfo[currZoom + 1].zoomOffsetXAxis
         zoomYOffset = this.props.zoomYOffset + this.props.mapZoomInfo[currZoom + 1].zoomOffsetYAxis
         data = {currZoom: currZoom,
@@ -146,7 +155,8 @@ class MapComponent extends Component {
                 zoomYOffset: zoomYOffset}
         this.props.handleZoomOffset(data)
         setTimeout(() => {
-          zoom.style.transition = null
+          zoomImage.style.transition = null
+          zoomSvg.style.transition = null
         }, 200)
       }
     }
@@ -192,17 +202,17 @@ class MapComponent extends Component {
       }
 
 
-      const percentScaleY = (this.props.mapZoomInfo[this.props.currZoom].boundsYAxis/2)
-      const yAxisRange = (1 - (document.getElementById("mapCont").clientHeight / (document.getElementById("mapImage").height * this.props.mapZoomInfo[this.props.currZoom].zoomScale))) / 2
-      let trimY = newYTrim - percentScaleY
-      let yAxisPercent = trimY/percentScaleY
-      let svgYOffset = (yAxisRange*yAxisPercent) * 100
+      const yAxisBoundRange = (this.props.mapZoomInfo[this.props.currZoom].boundsYAxis/2)
+      const yAxisPercent = (1 - (document.getElementById("mapCont").clientHeight / (document.getElementById("mapImage").height * this.props.mapZoomInfo[this.props.currZoom].zoomScale))) / 2
+      let trimY = newYTrim - yAxisBoundRange
+      let yAxisPercentTrim = trimY/yAxisBoundRange
+      let svgYOffset = (yAxisPercent*yAxisPercentTrim) * 100
 
-      const percentScaleX = (this.props.mapZoomInfo[this.props.currZoom].boundsXAxis/2)
-      const xAxisRange = (1 - (document.getElementById("mapCont").clientWidth / (document.getElementById("mapImage").width * this.props.mapZoomInfo[this.props.currZoom].zoomScale))) / 2
-      let trimX = newXTrim - percentScaleX
-      let xAxisPercent = trimX/percentScaleX
-      let svgXOffset = (xAxisRange*xAxisPercent) * 100
+      const xAxisBoundRange = (this.props.mapZoomInfo[this.props.currZoom].boundsXAxis/2)
+      const xAxisPercent = (1 - (document.getElementById("mapCont").clientWidth / (document.getElementById("mapImage").width * this.props.mapZoomInfo[this.props.currZoom].zoomScale))) / 2
+      let trimX = newXTrim - xAxisBoundRange
+      let xAxisPercentTrim = trimX/xAxisBoundRange
+      let svgXOffset = (xAxisPercent*xAxisPercentTrim) * 100
 
       data = {zoomXOffset: newXTrim,
               zoomYOffset: newYTrim,
@@ -249,7 +259,7 @@ class MapComponent extends Component {
             return <MapArea key={idx} pointName={item.pointName} areaCoords={item.areaCoords} />
           })}
         </map>
-        <svg className="zoomSvg" style={{width: "2048px",
+        <svg id="zoomSvg" style={{width: "2048px",
                                          height: "2048px",
                                          pointerEvents: "none",
                                          transform: `scale(${this.props.mapZoomInfo[this.props.currZoom].zoomScale})

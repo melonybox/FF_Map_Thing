@@ -61,10 +61,14 @@ code {
   left: 10%;
 }
 
-.zoomSvg {
+#zoomSvg {
   position: absolute;
   top: 50%;
   left: 50%;
+}
+
+.svgItems {
+  transition: 0.2s
 }
 
 .zoomCenter {
