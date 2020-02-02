@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import MapComponent from '../components/mapComponent.js'
+import MapComponent from '../containers/mapComponent.js'
 
 class MapBox extends Component {
 
