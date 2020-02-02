@@ -5,7 +5,8 @@ import {handleMapData,
         handleMouseDown,
         handleMouseUp,
         handleMouseMove} from '../actions/actions';
-import MapArea from '../components/mapArea.js'
+import MapArea from '../components/mapArea.js';
+import MapSvgPoints from '../components/mapSvgPoints.js'
 
 class MapComponent extends Component {
 
@@ -266,7 +267,7 @@ class MapComponent extends Component {
         </img>
         <map name="image-map">
           {this.props.mapCoords.map((item,idx) => {
-            return <MapArea key={idx} pointName={item.pointName} areaCoords={item.areaCoords} />
+            return <MapArea key={idx} pointName={item.pointName} xAxis={item.xAxis} yAxis={item.yAxis} />
           })}
         </map>
         <svg id="zoomSvg" style={{width: "2048px",
@@ -282,8 +283,9 @@ class MapComponent extends Component {
                                                                   :
                                                                   ((1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50) - this.props.svgYOffset}%)`}}>
           <g>
-            <circle cx="785" cy="462" r="20" style={{fill: "rgb(102,102,102)", stroke: "rgb(51,51,51)", strokeWidth: "1", opacity: "1"}} />
-            <circle cx="463" cy="547" r="20" style={{fill: "rgb(102,102,102)", stroke: "rgb(51,51,51)", strokeWidth: "1", opacity: "1"}} />
+            {this.props.mapCoords.map((item,idx) => {
+              return <MapSvgPoints key={idx} xAxis={item.xAxis} yAxis={item.yAxis} />
+            })}
           </g>
         </svg>
         <div className="zoomButtons" style={{pointerEvents: `${!!this.props.click ? "none" : "auto"}`}}>
