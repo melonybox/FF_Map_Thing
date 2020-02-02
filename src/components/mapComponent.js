@@ -92,9 +92,23 @@ class MapComponent extends Component {
               zoomXOffset: defaultXOffset,
               zoomYOffset: defaultYOffset}
     } else {
+      const yAxisBoundRange = (this.props.mapZoomInfo[this.props.currZoom].boundsYAxis/2)
+      const yAxisPercent = (1 - (document.getElementById("mapCont").clientHeight / (document.getElementById("mapImage").height * this.props.mapZoomInfo[this.props.currZoom].zoomScale))) / 2
+      let trimY = this.props.zoomYOffset - yAxisBoundRange
+      let yAxisPercentTrim = trimY/yAxisBoundRange
+      let svgYOffset = (yAxisPercent*yAxisPercentTrim) * 100
+
+      const xAxisBoundRange = (this.props.mapZoomInfo[this.props.currZoom].boundsXAxis/2)
+      const xAxisPercent = (1 - (document.getElementById("mapCont").clientWidth / (document.getElementById("mapImage").width * this.props.mapZoomInfo[this.props.currZoom].zoomScale))) / 2
+      let trimX = this.props.zoomXOffset- xAxisBoundRange
+      let xAxisPercentTrim = trimX/xAxisBoundRange
+      let svgXOffset = (xAxisPercent*xAxisPercentTrim) * 100
+
       data = {mapZoomInfo: mapZoomInfo,
               defaultXOffset: defaultXOffset,
-              defaultYOffset: defaultYOffset}
+              defaultYOffset: defaultYOffset,
+              svgYOffset: svgYOffset,
+              svgXOffset: svgXOffset}
     }
 
     this.props.handleMapData(data)
@@ -105,8 +119,8 @@ class MapComponent extends Component {
     const zoomSvg = document.getElementById("zoomSvg")
 
     if (this.props.currZoom !== 3) {
-      zoomImage.style.transition = "0.2s"
-      zoomSvg.style.transition = "0.2s"
+      // zoomImage.style.transition = "0.2s"
+      // zoomSvg.style.transition = "0.2s"
       const currZoom = this.props.currZoom + 1
       const zoomXOffset = this.props.zoomXOffset - this.props.mapZoomInfo[currZoom].zoomOffsetXAxis
       const zoomYOffset = this.props.zoomYOffset - this.props.mapZoomInfo[currZoom].zoomOffsetYAxis
@@ -114,10 +128,10 @@ class MapComponent extends Component {
                     zoomXOffset: zoomXOffset,
                     zoomYOffset: zoomYOffset}
       this.props.handleZoomOffset(data)
-      setTimeout(() => {
-        zoomImage.style.transition = null
-        zoomSvg.style.transition = null
-      }, 200)
+      // setTimeout(() => {
+      //   zoomImage.style.transition = null
+      //   // zoomSvg.style.transition = null
+      // }, 200)
     }
   }
 
@@ -131,8 +145,8 @@ class MapComponent extends Component {
 
     if (this.props.currZoom !== 0) {
       if (this.props.currZoom === 1) {
-        zoomImage.style.transition = "0.2s"
-        zoomSvg.style.transition = "0.2s"
+        // zoomImage.style.transition = "0.2s"
+        // zoomSvg.style.transition = "0.2s"
         zoomXOffset = this.props.defaultXOffset
         zoomYOffset = this.props.defaultYOffset
         data = {currZoom: currZoom,
@@ -141,23 +155,23 @@ class MapComponent extends Component {
                 svgYOffset: 0,
                 svgXOffset: 0}
         this.props.handleZoomOffset(data)
-        setTimeout(() => {
-          zoomImage.style.transition = null
-          zoomSvg.style.transition = null
-        }, 200)
+        // setTimeout(() => {
+        //   zoomImage.style.transition = null
+        //   zoomSvg.style.transition = null
+        // }, 200)
       } else if (this.props.currZoom > 1) {
-        zoomImage.style.transition = "0.2s"
-        zoomSvg.style.transition = "0.2s"
+        // zoomImage.style.transition = "0.2s"
+        // zoomSvg.style.transition = "0.2s"
         zoomXOffset = this.props.zoomXOffset + this.props.mapZoomInfo[currZoom + 1].zoomOffsetXAxis
         zoomYOffset = this.props.zoomYOffset + this.props.mapZoomInfo[currZoom + 1].zoomOffsetYAxis
         data = {currZoom: currZoom,
                 zoomXOffset: zoomXOffset,
                 zoomYOffset: zoomYOffset}
         this.props.handleZoomOffset(data)
-        setTimeout(() => {
-          zoomImage.style.transition = null
-          zoomSvg.style.transition = null
-        }, 200)
+        // setTimeout(() => {
+        //   // zoomImage.style.transition = null
+        //   // zoomSvg.style.transition = null
+        // }, 200)
       }
     }
   }
@@ -271,8 +285,10 @@ class MapComponent extends Component {
                                                                   (1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50
                                                                   :
                                                                   ((1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50) - this.props.svgYOffset}%)`}}>
-          <circle cx="785" cy="462" r="20" style={{fill: "rgb(102,102,102)", stroke: "rgb(51,51,51)", strokeWidth: "1", opacity: "1"}} />
-          <circle cx="463" cy="547" r="20" style={{fill: "rgb(102,102,102)", stroke: "rgb(51,51,51)", strokeWidth: "1", opacity: "1"}} />
+          <g>
+            <circle cx="785" cy="462" r="20" style={{fill: "rgb(102,102,102)", stroke: "rgb(51,51,51)", strokeWidth: "1", opacity: "1"}} />
+            <circle cx="463" cy="547" r="20" style={{fill: "rgb(102,102,102)", stroke: "rgb(51,51,51)", strokeWidth: "1", opacity: "1"}} />
+          </g>
         </svg>
         <div className="zoomButtons" style={{pointerEvents: `${!!this.props.click ? "none" : "auto"}`}}>
           <p style={{cursor: "pointer"}} onPointerDown={this.handleZoomIn} > Increase </p>
