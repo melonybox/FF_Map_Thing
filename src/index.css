@@ -77,3 +77,22 @@ code {
 img {
     transform-origin: top left;
 }
+
+.markEmpty {
+  fill: rgb(255,255,255);
+  stroke: rgb(97,97,97);
+  stroke-width: 3;
+  opacity: 0;
+}
+.markNotSpawn {
+  fill: rgb(248,187,208);
+  stroke: rgb(97,97,97);
+  stroke-width: 3;
+  opacity: 1;
+}
+.markSpawn {
+  fill: rgb(200,230,201);
+  stroke: rgb(97,97,97);
+  stroke-width: 3;
+  opacity: 1;
+}
