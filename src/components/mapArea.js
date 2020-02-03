@@ -1,9 +1,24 @@
 import React from 'react';
+import {connect} from 'react-redux'
+import {handleSvgChange} from '../actions/actions';
 
 class MapArea extends React.PureComponent {
+  dataSend = (elPos,markType) => {
+    return {elPos: elPos, markType: markType}
+  }
+
   handleSvgClick = (elPos, e) => {
     e.preventDefault()
-    console.log(elPos)
+    switch (this.props.markType) {
+      case 'markEmpty':
+        return this.props.handleSvgChange(this.dataSend(elPos,'markNotSpawn'))
+      case 'markNotSpawn':
+        return this.props.handleSvgChange(this.dataSend(elPos,'markSpawn'))
+      case 'markSpawn':
+        return this.props.handleSvgChange(this.dataSend(elPos,'markEmpty'))
+      default:
+        return this.props.handleSvgChange(this.dataSend(elPos,'markEmpty'))
+    }
   }
 
   render(){
@@ -15,4 +30,8 @@ class MapArea extends React.PureComponent {
   }
 }
 
-export default MapArea
+const mapDispatchToProps = dispatch => ({
+  handleSvgChange: (data) => dispatch(handleSvgChange(data))
+})
+
+export default connect(null,mapDispatchToProps)(MapArea)

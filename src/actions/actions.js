@@ -45,3 +45,8 @@ export const handleMapNames = data => ({
   type: "HANDLE_MAP_NAMES",
   payload: data
 })
+
+export const handleSvgChange = data => ({
+  type: "HANDLE_SVG_CHANGE",
+  payload: data
+})

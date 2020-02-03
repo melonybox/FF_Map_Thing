@@ -47,6 +47,19 @@ export default function reducer(state = initialState, action) {
         return {...state, ...action.payload}
       case "HANDLE_MAP_NAMES":
         return {...state, ...action.payload}
+      case "HANDLE_SVG_CHANGE":
+        return {...state,
+                mapCoords: state.mapCoords.map(
+                  (item, idx) => idx === action.payload.elPos ? {...item, markType: action.payload.markType} : item
+                )}
+        // return {...state,
+        //         mapCoords: {
+        //           ...state.mapCoords,
+        //           [action.payload.elPos]: {
+        //             ...state.mapCoords[action.payload.elPos],
+        //             markType: action.payload.markType
+        //           }
+        //         }}
       default:
         return state;
   }
