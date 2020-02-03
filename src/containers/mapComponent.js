@@ -267,7 +267,7 @@ class MapComponent extends Component {
         </img>
         <map name="image-map">
           {this.props.mapCoords.map((item,idx) => {
-            return <MapArea key={idx} elPos={idx} pointName={item.pointName} xAxis={item.xAxis} yAxis={item.yAxis} />
+            return <MapArea key={idx} elPos={idx} pointName={item.pointName} xAxis={item.xAxis} yAxis={item.yAxis} markType={item.markType} />
           })}
         </map>
         <svg id="zoomSvg" style={{width: "2048px",
@@ -284,7 +284,7 @@ class MapComponent extends Component {
                                                                   ((1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50) - this.props.svgYOffset}%)`}}>
           <g>
             {this.props.mapCoords.map((item,idx) => {
-              return <MapSvgPoints key={idx} xAxis={item.xAxis} yAxis={item.yAxis} />
+              return <MapSvgPoints key={idx} xAxis={item.xAxis} yAxis={item.yAxis} markType={item.markType} />
             })}
           </g>
         </svg>
