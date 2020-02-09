@@ -7,8 +7,23 @@ export const getMapNamesFetch = () => {
           alert(data.errors)
         } else {
           dispatch(handleMapNames(data))
+          dispatch(getMapCoordsFetch(data.mapNames[0]))
         }
     })
+  }
+}
+
+export const getMapCoordsFetch = data => {
+  return dispatch => {
+    return fetch(`/json/${data}.json`)
+      .then(resp => resp.json())
+      .then(data => {
+        if (data.errors) {
+          alert(data.errors)
+        } else {
+          dispatch(handleMapCoords(data))
+        }
+      })
   }
 }
 
@@ -48,5 +63,10 @@ export const handleMapNames = data => ({
 
 export const handleSvgChange = data => ({
   type: "HANDLE_SVG_CHANGE",
+  payload: data
+})
+
+export const handleMapCoords = data => ({
+  type: "HANDLE_MAP_COORDS",
   payload: data
 })
