@@ -64,7 +64,7 @@ class MapComponent extends Component {
 
     for (let i = 0; i < 4; i++) {
       if (i === 0) {
-        mapZoomInfo[i] = {zoomScale: defaultScale}
+        mapZoomInfo[i] = {zoomScale: defaultScale, imgHeight: imgHeight, imgWidth: imgWidth}
       } else {
         mapZoomInfo[i] = {zoomScale: (defaultScale * (((i * 33) * 0.01) + 1))}
         const imgHeightCent = (imgHeight / 2)
@@ -238,7 +238,7 @@ class MapComponent extends Component {
 
   render(){
     return(
-      this.props.mapLoaded === false ?
+      (this.props.mapLoaded === false || this.props.mapCoordsLoaded === false) ?
       <>
         <img src={`/maps/${this.props.mapNames[this.props.mapSelect]}.jpg`}
           onLoad={this.handleLoad}
@@ -252,7 +252,6 @@ class MapComponent extends Component {
       :
       <>
         <img src={`/maps/${this.props.mapNames[this.props.mapSelect]}.jpg`}
-          onLoad={this.handleLoad}
           id="mapImage"
           alt={this.props.mapNames[this.props.mapSelect]}
           style={{transform: `scale(${this.props.mapZoomInfo[this.props.currZoom].zoomScale})
@@ -270,18 +269,18 @@ class MapComponent extends Component {
             return <MapArea key={idx} elPos={idx} pointName={item.pointName} xAxis={item.xAxis} yAxis={item.yAxis} markType={item.markType} />
           })}
         </map>
-        <svg id="zoomSvg" style={{width: "2048px",
-                                         height: "2048px",
-                                         pointerEvents: "none",
-                                         transform: `scale(${this.props.mapZoomInfo[this.props.currZoom].zoomScale})
-                                                     translateX(${this.props.currZoom === 0 ?
-                                                                  (1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50
-                                                                  :
-                                                                  ((1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50) - this.props.svgXOffset}%)
-                                                     translateY(${this.props.currZoom === 0 ?
-                                                                  (1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50
-                                                                  :
-                                                                  ((1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50) - this.props.svgYOffset}%)`}}>
+        <svg id="zoomSvg" style={{width: `${this.props.mapZoomInfo[0].imgWidth}px`,
+                                  height: `${this.props.mapZoomInfo[0].imgHeight}px`,
+                                  pointerEvents: "none",
+                                  transform: `scale(${this.props.mapZoomInfo[this.props.currZoom].zoomScale})
+                                              translateX(${this.props.currZoom === 0 ?
+                                                           (1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50
+                                                           :
+                                                           ((1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50) - this.props.svgXOffset}%)
+                                              translateY(${this.props.currZoom === 0 ?
+                                                           (1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50
+                                                           :
+                                                           ((1/this.props.mapZoomInfo[this.props.currZoom].zoomScale) * -50) - this.props.svgYOffset}%)`}}>
           <g>
             {this.props.mapCoords.map((item,idx) => {
               return <MapSvgPoints key={idx} xAxis={item.xAxis} yAxis={item.yAxis} markType={item.markType} />
@@ -303,6 +302,7 @@ const mapStateToProps = state => ({
   mapCoords: state.mapCoords,
   mapSelect: state.mapSelect,
   mapLoaded: state.mapLoaded,
+  mapCoordsLoaded: state.mapCoordsLoaded,
   mapZoomInfo: state.mapZoomInfo,
   click: state.click,
   currZoom: state.currZoom,

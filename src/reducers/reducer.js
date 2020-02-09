@@ -5,6 +5,7 @@ const initialState = {
   mapSelect: 0,
   mapZoomInfo: {},
   mapLoaded: false,
+  mapCoordsLoaded: false,
   click: false,
   currZoom: 0,
   defaultXOffset: 0,
@@ -45,7 +46,7 @@ export default function reducer(state = initialState, action) {
         //           }
         //         }}
       case "HANDLE_MAP_COORDS":
-          return {...state, ...action.payload}
+          return {...state, ...action.payload, mapCoordsLoaded: true}
       default:
         return state;
   }
