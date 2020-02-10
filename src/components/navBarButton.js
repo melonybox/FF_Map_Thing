@@ -1,6 +1,13 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {handleClearData} from '../actions/actions.js';
 
 class NavBarButton extends React.PureComponent {
+
+  handleMap = (mapNumber) => {
+    const data = {mapNumber: mapNumber, mapName: "Amh_Araeng_-_Tarchia"}
+    this.props.handleClearData(data)
+  }
 
   render(){
     return(
@@ -11,4 +18,10 @@ class NavBarButton extends React.PureComponent {
   }
 }
 
-export default NavBarButton
+const mapDispatchToProps = dispatch => ({
+  handleClearData: (data) => dispatch(handleClearData(data))
+})
+
+export default connect(null, mapDispatchToProps)(NavBarButton)
+
+// getMapCoordsFetch

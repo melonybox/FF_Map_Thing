@@ -27,6 +27,14 @@ export const getMapCoordsFetch = data => {
   }
 }
 
+export const handleClearData = data => {
+  return dispatch => {
+    dispatch(handleClearInfo())
+    dispatch(handleMap(data.mapNumber))
+    dispatch(getMapCoordsFetch(data.mapName))
+  }
+}
+
 
 export const handleMap = data => ({
   type: 'HANDLE_MAP',
@@ -68,5 +76,10 @@ export const handleSvgChange = data => ({
 
 export const handleMapCoords = data => ({
   type: "HANDLE_MAP_COORDS",
+  payload: data
+})
+
+export const handleClearInfo = data => ({
+  type: "HANDLE_CLEAR_INFO",
   payload: data
 })

@@ -47,6 +47,18 @@ export default function reducer(state = initialState, action) {
         //         }}
       case "HANDLE_MAP_COORDS":
           return {...state, ...action.payload, mapCoordsLoaded: true}
+      case "HANDLE_CLEAR_INFO":
+          return {...state, mapCoords: [],
+                            mapZoomInfo: {},
+                            mapLoaded: false,
+                            mapCoordsLoaded: false,
+                            currZoom: 0,
+                            defaultXOffset: 0,
+                            defaultYOffset: 0,
+                            zoomXOffset: 0,
+                            zoomYOffset: 0,
+                            svgYOffset: 0,
+                            svgXOffset: 0}
       default:
         return state;
   }

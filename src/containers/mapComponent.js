@@ -4,7 +4,7 @@ import {handleMapData,
         handleZoomOffset,
         handleMouseDown,
         handleMouseUp,
-        handleMouseMove} from '../actions/actions';
+        handleMouseMove} from '../actions/actions.js';
 import MapArea from '../components/mapArea.js';
 import MapSvgPoints from '../components/mapSvgPoints.js'
 

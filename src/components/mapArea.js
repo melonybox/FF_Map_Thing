@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {handleSvgChange} from '../actions/actions';
+import {handleSvgChange} from '../actions/actions.js';
 
 class MapArea extends React.PureComponent {
   dataSend = (elPos,markType) => {
