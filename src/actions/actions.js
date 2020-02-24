@@ -1,6 +1,6 @@
 export const getMapNamesFetch = () => {
   return dispatch => {
-    return fetch("/json/maps.json")
+    return fetch("../json/maps.json", {mode: 'no-cors'})
       .then(resp => resp.json())
       .then(data => {
         if (data.errors) {
@@ -15,7 +15,7 @@ export const getMapNamesFetch = () => {
 
 export const getMapCoordsFetch = data => {
   return dispatch => {
-    return fetch(`/json/${data}.json`)
+    return fetch(`../json/${data}.json`, {mode: 'no-cors'})
       .then(resp => resp.json())
       .then(data => {
         if (data.errors) {
