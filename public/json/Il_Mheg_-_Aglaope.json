@@ -1,0 +1,21 @@
+{
+  "mapCoords": [
+    {"pointName": "a", "xAxis": 960, "yAxis": 376, "markType": "markEmpty"},
+    {"pointName": "b", "xAxis": 1225, "yAxis": 306, "markType": "markEmpty"},
+    {"pointName": "c", "xAxis": 1412, "yAxis": 223, "markType": "markEmpty"},
+    {"pointName": "d", "xAxis": 1639, "yAxis": 316, "markType": "markEmpty"},
+    {"pointName": "e", "xAxis": 1530, "yAxis": 633, "markType": "markEmpty"},
+    {"pointName": "f", "xAxis": 1310, "yAxis": 900, "markType": "markEmpty"},
+    {"pointName": "g", "xAxis": 511, "yAxis": 745, "markType": "markEmpty"},
+    {"pointName": "h", "xAxis": 491, "yAxis": 968, "markType": "markEmpty"},
+    {"pointName": "i", "xAxis": 323, "yAxis": 1100, "markType": "markEmpty"},
+    {"pointName": "j", "xAxis": 343, "yAxis": 1302, "markType": "markEmpty"},
+    {"pointName": "k", "xAxis": 433, "yAxis": 1482, "markType": "markEmpty"},
+    {"pointName": "l", "xAxis": 630, "yAxis": 1654, "markType": "markEmpty"},
+    {"pointName": "m", "xAxis": 935, "yAxis": 1694, "markType": "markEmpty"},
+    {"pointName": "n", "xAxis": 1185, "yAxis": 1812, "markType": "markEmpty"},
+    {"pointName": "o", "xAxis": 1177, "yAxis": 1587, "markType": "markEmpty"},
+    {"pointName": "p", "xAxis": 1090, "yAxis": 1392, "markType": "markEmpty"},
+    {"pointName": "q", "xAxis": 905, "yAxis": 1307, "markType": "markEmpty"}
+  ]
+}
