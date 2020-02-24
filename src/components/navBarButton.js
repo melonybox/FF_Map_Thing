@@ -4,15 +4,16 @@ import {handleClearData} from '../actions/actions.js';
 
 class NavBarButton extends React.PureComponent {
 
-  handleMap = (mapNumber) => {
-    const data = {mapNumber: mapNumber, mapName: "Amh_Araeng_-_Tarchia"}
+  handleMap = (mapNumber, event) => {
+    const data = {mapNumber: mapNumber, mapName: event.target.name}
     this.props.handleClearData(data)
   }
 
   render(){
     return(
       <>
-        <button className="navText" type="button" onClick={() => this.handleMap(0)}>Tarchia</button>
+        <button className="navText" type="button" name="Amh_Araeng_-_Tarchia" onClick={this.handleMap.bind(this, 0)}>Tarchia</button>
+        <button className="navText" type="button" name="Il_Mheg_-_Aglaope" onClick={this.handleMap.bind(this, 1)}>Aglaope</button>
       </>
     )
   }

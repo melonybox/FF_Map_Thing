@@ -26,8 +26,6 @@ class App extends Component {
               {this.props.mapData}
             </h1>
             <div>
-              <button className="navText" type="button" onClick={() => this.handleMap(0)}>Tarchia</button>
-              <button className="navText" type="button" onClick={() => this.handleMap(1)}>Aglaope</button>
               <NavBarButton />
             </div>
           </div>
