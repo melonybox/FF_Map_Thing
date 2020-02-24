@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {handleMap,getMapNamesFetch} from './actions/actions.js';
 import MapBox from './containers/mapBox.js'
-import NavBarButton from './components/navBarButton.js'
+import NavBarBox from './containers/navBarBox.js'
 
 
 class App extends Component {
@@ -26,7 +26,7 @@ class App extends Component {
               {this.props.mapData}
             </h1>
             <div>
-              <NavBarButton />
+              <NavBarBox />
             </div>
           </div>
           <MapBox />

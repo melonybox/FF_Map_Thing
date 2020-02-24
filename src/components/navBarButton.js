@@ -5,24 +5,27 @@ import {handleClearData} from '../actions/actions.js';
 class NavBarButton extends React.PureComponent {
 
   handleMap = (mapNumber, event) => {
-    const data = {mapNumber: mapNumber, mapName: event.target.name}
-    this.props.handleClearData(data)
+    if (this.props.mapSelect !== this.props.mapNameNumber) {
+      const data = {mapNumber: mapNumber, mapName: event.target.name}
+      this.props.handleClearData(data)
+    }
   }
 
   render(){
     return(
       <>
-        <button className="navText" type="button" name="Amh_Araeng_-_Tarchia" onClick={this.handleMap.bind(this, 0)}>Tarchia</button>
-        <button className="navText" type="button" name="Il_Mheg_-_Aglaope" onClick={this.handleMap.bind(this, 1)}>Aglaope</button>
+        <button className="navText" type="button" name={this.props.mapNameFile} onClick={this.handleMap.bind(this, this.props.mapNameNumber)}>{this.props.mapName}</button>
       </>
     )
   }
 }
 
+const mapStateToProps = state => ({
+  mapSelect: state.mapSelect
+})
+
 const mapDispatchToProps = dispatch => ({
   handleClearData: (data) => dispatch(handleClearData(data))
 })
 
-export default connect(null, mapDispatchToProps)(NavBarButton)
-
-// getMapCoordsFetch
+export default connect(mapStateToProps, mapDispatchToProps)(NavBarButton)

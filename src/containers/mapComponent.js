@@ -6,7 +6,7 @@ import {handleMapData,
         handleMouseUp,
         handleMouseMove} from '../actions/actions.js';
 import MapArea from '../components/mapArea.js';
-import MapSvgPoints from '../components/mapSvgPoints.js'
+import MapSvgPoints from '../components/mapSvgPoints.js';
 
 class MapComponent extends Component {
 
