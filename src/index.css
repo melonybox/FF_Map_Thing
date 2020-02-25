@@ -32,7 +32,7 @@ code {
 }
 
 .titleText {
-  font-size: calc(1 .5em + 1vmin);
+  font-size: calc(1.5em + 1vmin);
   letter-spacing: calc((1.5rem + 1vmin) * 0.01);
   font-weight: normal;
   margin: 0;
