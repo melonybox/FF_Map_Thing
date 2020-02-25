@@ -85,13 +85,13 @@ img {
   opacity: 0;
 }
 .markNotSpawn {
-  fill: rgb(248,187,208);
+  fill: rgb(240,98,146);
   stroke: rgb(97,97,97);
   stroke-width: 3;
   opacity: 1;
 }
 .markSpawn {
-  fill: rgb(200,230,201);
+  fill: rgb(129,199,132);
   stroke: rgb(97,97,97);
   stroke-width: 3;
   opacity: 1;
