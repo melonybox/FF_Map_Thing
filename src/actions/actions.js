@@ -1,50 +1,79 @@
 export const getMapNamesFetch = () => {
-    return dispatch => {
-
-      const loadJSON = (callback) => {
-        var xobj = new XMLHttpRequest()
-        xobj.overrideMimeType("application/json")
-        xobj.open('GET', '../json/maps.json', true)
-        xobj.onreadystatechange = () => {
-          if (xobj.readyState === 4 && xobj.status === 200) {
-            // Required use of an anonymous callback as .open
-            // will NOT return a value but simply returns undefined
-            // in asynchronous mode
-            callback(JSON.parse(xobj.response))
-          }
+  return dispatch => {
+    return fetch("/json/maps.json")
+      .then(resp => resp.json())
+      .then(data => {
+        if (data.errors) {
+          alert(data.errors)
+        } else {
+          dispatch(handleMapNames(data))
+          dispatch(getMapCoordsFetch(data.mapNames[0]))
         }
-        xobj.send(null)
-      }
-
-      loadJSON((json) => {
-        dispatch(handleMapNames(json))
-        dispatch(getMapCoordsFetch(json.mapNames[0]))
       })
     }
 }
 
 export const getMapCoordsFetch = data => {
   return dispatch => {
-    const loadJSON = (callback) => {
-      var xobj = new XMLHttpRequest()
-      xobj.overrideMimeType("application/json")
-      xobj.open('GET', `../json/${data}.json`, true)
-      xobj.onreadystatechange = () => {
-        if (xobj.readyState === 4 && xobj.status === 200) {
-          // Required use of an anonymous callback as .open
-          // will NOT return a value but simply returns undefined
-          // in asynchronous mode
-          callback(JSON.parse(xobj.response))
+    return fetch(`/json/${data}.json`)
+      .then(resp => resp.json())
+      .then(data => {
+        if (data.errors) {
+          alert(data.errors)
+        } else {
+          dispatch(handleMapCoords(data))
         }
-      }
-      xobj.send(null)
+      })
     }
-
-    loadJSON((json) => {
-      dispatch(handleMapCoords(json))
-    })
-  }
 }
+
+// export const getMapNamesFetch = () => {
+//     return dispatch => {
+//
+//       const loadJSON = (callback) => {
+//         var xobj = new XMLHttpRequest()
+//         xobj.overrideMimeType("application/json")
+//         xobj.open('GET', '../json/maps.json', true)
+//         xobj.onreadystatechange = () => {
+//           if (xobj.readyState === 4 && xobj.status === 200) {
+//             // Required use of an anonymous callback as .open
+//             // will NOT return a value but simply returns undefined
+//             // in asynchronous mode
+//             callback(JSON.parse(xobj.response))
+//           }
+//         }
+//         xobj.send(null)
+//       }
+//
+//       loadJSON((json) => {
+//         dispatch(handleMapNames(json))
+//         dispatch(getMapCoordsFetch(json.mapNames[0]))
+//       })
+//     }
+// }
+//
+// export const getMapCoordsFetch = data => {
+//   return dispatch => {
+//     const loadJSON = (callback) => {
+//       var xobj = new XMLHttpRequest()
+//       xobj.overrideMimeType("application/json")
+//       xobj.open('GET', `../json/${data}.json`, true)
+//       xobj.onreadystatechange = () => {
+//         if (xobj.readyState === 4 && xobj.status === 200) {
+//           // Required use of an anonymous callback as .open
+//           // will NOT return a value but simply returns undefined
+//           // in asynchronous mode
+//           callback(JSON.parse(xobj.response))
+//         }
+//       }
+//       xobj.send(null)
+//     }
+//
+//     loadJSON((json) => {
+//       dispatch(handleMapCoords(json))
+//     })
+//   }
+// }
 
 export const handleClearData = data => {
   return dispatch => {
