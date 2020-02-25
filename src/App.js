@@ -9,7 +9,26 @@ class App extends Component {
 
   componentDidMount = () => {
     this.props.getMapNamesFetch()
+
+    // this.loadJSON((json) => {
+    //   this.props.getMapNamesFetch(json)
+    // })
   }
+
+  // loadJSON = (callback) => {
+  //   var xobj = new XMLHttpRequest();
+  //   xobj.overrideMimeType("application/json");
+  //   xobj.open('GET', '../json/maps.json', true);
+  //   xobj.onreadystatechange = () => {
+  //     if (xobj.readyState === 4 && xobj.status === 200) {
+  //       // Required use of an anonymous callback as .open
+  //       // will NOT return a value but simply returns undefined
+  //       // in asynchronous mode
+  //       callback(JSON.parse(xobj.response));
+  //     }
+  //   };
+  //   xobj.send(null);
+  // }
 
   handleMap = (page) => {
     this.props.handleMap(page)
