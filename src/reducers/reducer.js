@@ -2,6 +2,8 @@ const initialState = {
   mapData: "Hello World!",
   mapNames: [],
   mapCoords: [],
+  targetDate: "",
+  mapVersion: 0,
   mapSelect: 0,
   mapZoomInfo: {},
   mapLoaded: false,

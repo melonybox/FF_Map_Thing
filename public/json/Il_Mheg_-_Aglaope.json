@@ -17,5 +17,7 @@
     {"pointName": "o", "xAxis": 1177, "yAxis": 1587, "markType": "markEmpty"},
     {"pointName": "p", "xAxis": 1090, "yAxis": 1392, "markType": "markEmpty"},
     {"pointName": "q", "xAxis": 905, "yAxis": 1307, "markType": "markEmpty"}
-  ]
+  ],
+  "targetDate": "",
+  "mapVersion": 0
 }
