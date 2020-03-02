@@ -16,12 +16,21 @@ export const getMapNamesFetch = () => {
 export const getMapCoordsFetch = data => {
   return dispatch => {
     return fetch(`/json/${data}.json`)
-      .then(resp => resp.json())
+      .then(resp => Promise.all([resp.json(),data]))
       .then(data => {
-        if (data.errors) {
-          alert(data.errors)
+        if (data[0].errors) {
+          alert(data[0].errors)
         } else {
-          dispatch(handleMapCoords(data))
+          if (localStorage.getItem(data[1]) === null) {
+            localStorage.setItem(data[1], JSON.stringify(data[0]))
+            dispatch(handleMapCoords(data[0]))
+          } else if (JSON.parse(localStorage.getItem(data[1])).mapVersion !== data[0].mapVersion) {
+            localStorage.removeItem(data[1])
+            localStorage.setItem(data[1], JSON.stringify(data[0]))
+            dispatch(handleMapCoords(data[0]))
+          } else {
+            dispatch(handleMapCoords(JSON.parse(localStorage.getItem(data[1]))))
+          }
         }
       })
     }
