@@ -92,6 +92,22 @@ export const handleClearData = data => {
   }
 }
 
+export const handleSvgArr = data => {
+  return (dispatch, getState) => {
+    const svgArr = getState().mapCoords
+    const newSvgArr = svgArr.map((item, idx) => idx === data.elPos ? {...item, markType: data.markType} : item)
+    dispatch(handleSvgChange(newSvgArr))
+  }
+
+
+}
+  // const newSvgArr =
+  // {...state,
+  //         mapCoords: state.mapCoords.map(
+  //           (item, idx) => idx === action.payload.elPos ? {...item, markType: action.payload.markType} : item
+  //         )}
+// }
+
 
 export const handleMap = data => ({
   type: 'HANDLE_MAP',

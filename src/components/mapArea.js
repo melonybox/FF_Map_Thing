@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {handleSvgChange} from '../actions/actions.js';
+import {handleSvgArr} from '../actions/actions.js';
 
 class MapArea extends React.PureComponent {
   dataSend = (elPos,markType) => {
@@ -11,13 +11,13 @@ class MapArea extends React.PureComponent {
     e.preventDefault()
     switch (this.props.markType) {
       case 'markEmpty':
-        return this.props.handleSvgChange(this.dataSend(elPos,'markNotSpawn'))
+        return this.props.handleSvgArr(this.dataSend(elPos,'markNotSpawn'))
       case 'markNotSpawn':
-        return this.props.handleSvgChange(this.dataSend(elPos,'markSpawn'))
+        return this.props.handleSvgArr(this.dataSend(elPos,'markSpawn'))
       case 'markSpawn':
-        return this.props.handleSvgChange(this.dataSend(elPos,'markEmpty'))
+        return this.props.handleSvgArr(this.dataSend(elPos,'markEmpty'))
       default:
-        return this.props.handleSvgChange(this.dataSend(elPos,'markEmpty'))
+        return this.props.handleSvgArr(this.dataSend(elPos,'markEmpty'))
     }
   }
 
@@ -31,7 +31,7 @@ class MapArea extends React.PureComponent {
 }
 
 const mapDispatchToProps = dispatch => ({
-  handleSvgChange: (data) => dispatch(handleSvgChange(data))
+  handleSvgArr: (data) => dispatch(handleSvgArr(data))
 })
 
 export default connect(null,mapDispatchToProps)(MapArea)
