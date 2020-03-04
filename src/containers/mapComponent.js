@@ -122,7 +122,7 @@ class MapComponent extends Component {
       this.props.handleZoomOffset(data)
       // setTimeout(() => {
       //   zoomImage.style.transition = null
-      //   // zoomSvg.style.transition = null
+      //   zoomSvg.style.transition = null
       // }, 200)
     }
   }
@@ -171,6 +171,7 @@ class MapComponent extends Component {
   handleMouseDown = (e) => {
     e.preventDefault()
     if (this.props.currZoom !== 0) {
+      debugger
       this.props.handleMouseDown()
     }
   }
@@ -256,7 +257,8 @@ class MapComponent extends Component {
           alt={this.props.mapNames[this.props.mapSelect]}
           style={{transform: `scale(${this.props.mapZoomInfo[this.props.currZoom].zoomScale})
                               translateX(${this.props.currZoom === 0 ? this.props.defaultXOffset : this.props.zoomXOffset}px)
-                              translateY(${this.props.currZoom === 0 ? this.props.defaultYOffset : this.props.zoomYOffset}px)`}}
+                              translateY(${this.props.currZoom === 0 ? this.props.defaultYOffset : this.props.zoomYOffset}px)`,
+                  cursor: `${this.props.currZoom === 0 ? "default" : "grab"}`}}
           useMap="#image-map"
           onMouseDown={this.handleMouseDown}
           onMouseUp={this.handleMouseUp}

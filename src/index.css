@@ -49,10 +49,10 @@ code {
 }
 
 .mapContainer {
-    height: 85vh;
-    width: 100vw;
-    overflow: hidden;
-    position: relative;
+  height: 85vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
 }
 
 .zoomButtons {
@@ -75,7 +75,7 @@ code {
 }
 
 img {
-    transform-origin: top left;
+  transform-origin: top left;
 }
 
 .markEmpty {
