@@ -171,13 +171,16 @@ class MapComponent extends Component {
   handleMouseDown = (e) => {
     e.preventDefault()
     if (this.props.currZoom !== 0) {
-      debugger
+      const zoomImage = document.getElementById("mapImage")
+      zoomImage.style.cursor = "grabbing"
       this.props.handleMouseDown()
     }
   }
 
   handleMouseUp = (e) => {
     if (this.props.currZoom !== 0 && this.props.click === true) {
+      const zoomImage = document.getElementById("mapImage")
+      zoomImage.style.cursor = "grab"
       this.props.handleMouseUp()
     }
   }
