@@ -292,7 +292,7 @@ class MapComponent extends Component {
             })}
           </g>
         </svg>
-        <div className="zoomButtons" style={{pointerEvents: `${!!this.props.click ? "none" : "auto"}`}}>
+        <div className="zoomButtons zoomText" style={{pointerEvents: `${!!this.props.click ? "none" : "auto"}`}}>
           <p style={{cursor: "pointer"}} onPointerDown={this.handleZoomIn} > Increase </p>
           <p style={{cursor: "pointer"}} onPointerDown={this.handleZoomOut} > Decrease </p>
         </div>
