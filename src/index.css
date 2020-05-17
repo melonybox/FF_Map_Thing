@@ -59,7 +59,8 @@ code {
   width: 100vw;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 0 1vmin #E1BEE7;
+  background-color: #E0E0E0;
+  box-shadow: 0 0 3vmin #E0E0E0;
 }
 
 .zoomButtons {
