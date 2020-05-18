@@ -52,6 +52,21 @@ code {
   background: none;
   border: none;
   outline: none;
+  border-bottom: 2px solid #E1BEE7;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.navText:focus {
+  border-bottom: 2px solid #BBDEFB;
+}
+
+.navText:active {
+  color: #F8FDCF; 
+}
+
+.navText:active, .navText:hover {
+  border-bottom: 2px solid #F8FDCF;
 }
 
 .mapContainer {
