@@ -33,7 +33,9 @@ code {
 
 .navBar {
   height: 15vh;
+  width: 100%;
   line-height: calc(1.5em + 1vmin);
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 92%, rgba(224,224,224,1) 100%)
 }
 
 .titleText {
@@ -52,6 +54,7 @@ code {
   background: none;
   border: none;
   outline: none;
+  color: #E1BEE7;
   border-bottom: 2px solid #E1BEE7;
   border-radius: 6px;
   cursor: pointer;
@@ -62,7 +65,7 @@ code {
 }
 
 .navText:active {
-  color: #F8FDCF; 
+  color: #F8FDCF;
 }
 
 .navText:active, .navText:hover {
@@ -75,7 +78,6 @@ code {
   overflow: hidden;
   position: relative;
   background-color: #E0E0E0;
-  box-shadow: 0 0 3vmin #E0E0E0;
 }
 
 .zoomButtons {
