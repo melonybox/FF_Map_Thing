@@ -14,7 +14,7 @@ class NavBarButton extends React.PureComponent {
   render(){
     return(
       <>
-        <button className="navText" type="button" style={{cursor: "pointer"}} name={this.props.mapNameFile} onClick={this.handleMap.bind(this, this.props.mapNameNumber)}>{this.props.mapName}</button>
+        <button className={`navText ${this.props.mapNameNumber === this.props.mapSelect ? "selectedButton" : ""}`} type="button" style={{cursor: "pointer"}} name={this.props.mapNameFile} onClick={this.handleMap.bind(this, this.props.mapNameNumber)}>{this.props.mapName}</button>
       </>
     )
   }
