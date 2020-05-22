@@ -61,10 +61,11 @@ code {
 }
 
 .navText:focus {
+  color: #BBDEFB;
   border-bottom: calc((0.5rem + 1vmin) * 0.2) solid #BBDEFB;
 }
 
-.navText:active {
+.navText:active, .navText:hover {
   color: #F8FDCF;
 }
 
