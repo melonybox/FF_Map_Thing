@@ -50,26 +50,36 @@ code {
   letter-spacing: calc((0.5rem + 1vmin) * 0.01);
   font-weight: normal;
   margin: 0 calc((0.75rem + 1vmin) * 0.2) 0;
-  padding: 0 0 calc((0.5rem + 1vmin) * 0.2) 0;
   background: none;
   border: none;
   outline: none;
   color: #E1BEE7;
-  border-bottom: calc((0.5rem + 1vmin) * 0.2) solid #E1BEE7;
-  border-radius: 20%;
   cursor: pointer;
 }
 
-.navText:focus {
-  color: #BBDEFB;
+.navTextZoom {
+  padding: calc((0.5rem + 1vmin) * 0.2) 0;
+}
+
+.navTextBar {
+  padding: 0 0 calc((0.5rem + 1vmin) * 0.2) 0;
+  border-bottom: calc((0.5rem + 1vmin) * 0.2) solid #E1BEE7;
+  border-radius: 20%;
+}
+
+.navTextBar:focus {
   border-bottom: calc((0.5rem + 1vmin) * 0.2) solid #BBDEFB;
 }
 
-.navText:active, .navText:hover {
+.navTextBar:focus, .navText:focus {
+  color: #BBDEFB;
+}
+
+.navTextBar:active, .navTextBar:hover, .navText:active, .navText:hover {
   color: #F8FDCF;
 }
 
-.navText:active, .navText:hover, .selectedButton {
+.navTextBar:active, .navTextBar:hover, .selectedButton {
   border-bottom: calc((0.5rem + 1vmin) * 0.2) solid #F8FDCF;
 }
 
@@ -87,14 +97,6 @@ code {
   position: absolute;
   top: 10%;
   left: 10%;
-}
-
-.zoomText {
-  font-size: calc(0.5em + 1vmin);
-  letter-spacing: calc((0.5rem + 1vmin) * 0.01);
-  font-weight: normal;
-  margin: 0;
-  padding: 0 calc((0.75rem + 1vmin) * 0.2) 0;
 }
 
 #zoomSvg {
