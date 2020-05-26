@@ -294,10 +294,10 @@ class MapComponent extends Component {
         </svg>
         <div className="centerColumn zoomButtons" style={{pointerEvents: `${!!this.props.click ? "none" : "auto"}`}}>
           <button className="navText navTextZoom" style={{cursor: "pointer"}} onPointerDown={this.handleZoomIn} >
-            <span class="material-icons">zoom_in</span>
+            zoom_in
           </button>
           <button className="navText navTextZoom" style={{cursor: "pointer"}} onPointerDown={this.handleZoomOut} >
-            <span class="material-icons">zoom_out</span>
+            zoom_out
           </button>
         </div>
       </>

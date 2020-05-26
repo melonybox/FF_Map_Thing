@@ -46,7 +46,6 @@ code {
 }
 
 .navText {
-  font-size: calc(0.5em + 1vmin);
   letter-spacing: calc((0.5rem + 1vmin) * 0.01);
   font-weight: normal;
   margin: 0 calc((0.75rem + 1vmin) * 0.2) 0;
@@ -58,13 +57,16 @@ code {
 }
 
 .navTextZoom {
+  font-size: calc(1em + 1vmin);
   padding: calc((0.5rem + 1vmin) * 0.2) 0;
+  font-family: 'Material Icons';
 }
 
 .navTextBar {
   padding: 0 0 calc((0.5rem + 1vmin) * 0.2) 0;
   border-bottom: calc((0.5rem + 1vmin) * 0.2) solid #E1BEE7;
   border-radius: 20%;
+  font-size: calc(0.5em + 1vmin);
 }
 
 .navTextBar:focus {
