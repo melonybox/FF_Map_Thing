@@ -1,0 +1,13 @@
+{
+  "mapCoords": [
+    { "pointName": "a", "xAxis": 794, "yAxis": 640, "markType": "markEmpty" },
+    { "pointName": "b", "xAxis": 1029, "yAxis": 423, "markType": "markEmpty" },
+    { "pointName": "c", "xAxis": 1131, "yAxis": 525, "markType": "markEmpty" },
+    { "pointName": "d", "xAxis": 1304, "yAxis": 471, "markType": "markEmpty" },
+    { "pointName": "e", "xAxis": 1384, "yAxis": 518, "markType": "markEmpty" },
+    { "pointName": "f", "xAxis": 564, "yAxis": 1480, "markType": "markEmpty" },
+    { "pointName": "g", "xAxis": 832, "yAxis": 1664, "markType": "markEmpty" }
+  ],
+  "targetDate": "",
+  "mapVersion": 0
+}
